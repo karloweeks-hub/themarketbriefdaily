@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Investments | MarketBriefDaily</title>
+<title>Investments | TheMarketBriefDaily</title>
 
 <style>
 :root{
@@ -19,64 +19,236 @@
   --shadow: 0 18px 45px rgba(2,6,23,.10);
 }
 *{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
 body{
-  margin:0; font-family:var(--font); color:var(--ink); background:#fff; line-height:1.65;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
-.container{ width:min(var(--max), calc(100% - 56px)); margin:0 auto; }
-h1{ font-size:34px; letter-spacing:-.3px; margin:0 0 6px; }
-.sub{ color:var(--muted); margin-bottom:22px; }
+a{ color: var(--brand); text-decoration:none; }
+a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+.container{ width: min(var(--max), calc(100% - 56px)); margin: 0 auto; }
+
+.site-header{
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 16px 0; gap: 24px;
+}
+.brand{ display:flex; flex-direction:column; gap:2px; }
+.brand-title{ font-weight: 850; letter-spacing: -.2px; line-height: 1.1; }
+.brand-sub{ font-size: 13px; color: var(--muted2); }
+.nav{ display:flex; gap: 18px; align-items:center; flex-wrap:wrap; }
+.nav a{
+  color: var(--ink); font-weight: 650; font-size: 14px;
+  padding: 10px 2px 8px; border-bottom: 2px solid transparent;
+}
+.nav a:hover{ border-bottom-color: rgba(11,18,32,.18); text-decoration:none; }
+.nav a.is-active{ border-bottom-color: var(--ink); }
+
+.section{ padding: 30px 0 44px; }
+.kicker{ font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
+h1{ margin: 0 0 6px; font-size: 34px; letter-spacing: -.3px; }
+.lead{ margin: 0 0 18px; color: var(--muted); max-width: 80ch; }
 
 .portfolio{
-  border:1px solid var(--line); border-radius:16px; padding:18px; background:#fff; box-shadow:var(--shadow);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+  background: #fff;
+  box-shadow: var(--shadow);
 }
+.portfolio-top{
+  display:flex; justify-content:space-between; gap: 16px;
+  align-items:flex-start; flex-wrap: wrap;
+}
+.p-title{ font-weight: 850; letter-spacing: -.2px; }
+.p-sub{ color: var(--muted2); font-size: 13px; margin-top: 4px; }
+.p-actions{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.p-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding: 10px 12px; border-radius: 12px;
+  border: 1px solid var(--line); background: #fff;
+  color: var(--ink); font-weight: 750; cursor: pointer;
+}
+.p-btn:hover{ background: rgba(11,18,32,.03); }
+
 .p-kpis{
-  display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-bottom:16px;
+  display:grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin-top: 14px;
 }
-.kpi{ border:1px solid var(--line); border-radius:14px; padding:12px; }
-.kpi .label{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted2); }
-.kpi .value{ font-weight:850; font-size:18px; margin-top:6px; }
+.kpi{
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+}
+.kpi .label{
+  font-size: 12px;
+  color: var(--muted2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.kpi .value{
+  font-weight: 850;
+  margin-top: 6px;
+  font-size: 18px;
+}
+.kpi .sub{ margin-top: 4px; color: var(--muted); font-size: 13px; }
 
-.table-wrap{ overflow:auto; border:1px solid var(--line); border-radius:16px; }
-table{ width:100%; border-collapse:collapse; min-width:980px; }
-th,td{ padding:12px; border-bottom:1px solid var(--line); font-size:14px; }
-th{ font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted2); text-align:left; }
+.table-wrap{
+  overflow:auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  margin-top: 14px;
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1080px;
+  background:#fff;
+}
+th, td{
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  font-size: 14px;
+}
+th{
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  background: #fff;
+  white-space:nowrap;
+}
+td small{ color: var(--muted2); }
 
-input{ width:90px; padding:6px 8px; border-radius:10px; border:1px solid var(--line); }
-input:focus{ outline:none; border-color:rgba(11,78,162,.35); box-shadow:0 0 0 3px rgba(11,78,162,.10); }
+.pos{ color: #0a7a3a; font-weight: 850; }
+.neg{ color: #b42318; font-weight: 850; }
+.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
 
-.pos{ color:#0a7a3a; font-weight:800; }
-.neg{ color:#b42318; font-weight:800; }
+.details{
+  margin-top: 14px;
+  display:grid;
+  gap: 10px;
+}
+details{
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:#fff;
+  padding: 12px 14px;
+}
+summary{ cursor:pointer; font-weight: 850; }
+.tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+.tag{
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  color: var(--muted);
+}
+.note{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
 
-details{ border:1px solid var(--line); border-radius:14px; padding:10px 12px; margin-top:12px; }
-summary{ cursor:pointer; font-weight:750; }
-small{ color:var(--muted2); }
+.chartbox{
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 14px;
+}
+canvas{ width:100%; height:260px; display:block; }
 
+@media (max-width: 900px){
+  .container{ width: min(var(--max), calc(100% - 34px)); }
+  .header-inner{ flex-direction: column; align-items:flex-start; }
+  .p-kpis{ grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>Public Model Portfolio</h1>
-  <div class="sub">Institutional-style transparency · $100,000 total capital · small position sizing · high cash</div>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-title">TheMarketBriefDaily</div>
+      <div class="brand-sub">Market structure · metals · macro</div>
+    </div>
+    <nav class="nav">
+      <a href="./index.html">Home</a>
+      <a class="is-active" href="./investments.html">Investments</a>
+      <a href="./about.html">About</a>
+      <a href="./disclaimer.html">Disclaimer</a>
+    </nav>
+  </div>
+</header>
 
-  <section class="portfolio">
+<main class="container section">
+  <div class="kicker">Public model portfolio</div>
+  <h1>Investments</h1>
+  <p class="lead">
+    A small-allocation, high-cash portfolio designed for optionality. Prices update automatically (end-of-day close).
+    Theses are shown per position.
+  </p>
+
+  <section class="portfolio" aria-labelledby="port-title">
+    <div class="portfolio-top">
+      <div>
+        <div id="port-title" class="p-title">Portfolio Overview</div>
+        <div class="p-sub">
+          As of <span id="asof" class="mono">—</span> · Data source: Stooq (daily close) ·
+          Last refresh: <span id="refreshed" class="mono">—</span>
+        </div>
+      </div>
+      <div class="p-actions">
+        <button class="p-btn" id="refreshBtn">Refresh prices</button>
+        <button class="p-btn" id="toggleThesisBtn">Expand all theses</button>
+      </div>
+    </div>
 
     <div class="p-kpis">
       <div class="kpi">
         <div class="label">Total Capital</div>
-        <div class="value" id="totalCap">$100,000</div>
+        <div class="value mono" id="totalCap">$100,000</div>
+        <div class="sub">Initial model capital.</div>
       </div>
       <div class="kpi">
-        <div class="label">Invested</div>
-        <div class="value" id="invested">$0</div>
-      </div>
-      <div class="kpi">
-        <div class="label">Cash</div>
-        <div class="value" id="cash">$0</div>
+        <div class="label">Portfolio Value</div>
+        <div class="value mono" id="portValue">—</div>
+        <div class="sub">Invested + cash.</div>
       </div>
       <div class="kpi">
         <div class="label">P/L</div>
-        <div class="value" id="pl">$0</div>
+        <div class="value mono" id="portPL">—</div>
+        <div class="sub">Mark-to-market vs cost basis.</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Since Inception</div>
+        <div class="value mono" id="sinceInception">—</div>
+        <div class="sub">Return since inception date.</div>
+      </div>
+    </div>
+
+    <div class="chartbox">
+      <div class="kicker" style="margin:0 0 8px;">Performance since inception</div>
+      <canvas id="navChart" width="1200" height="320" aria-label="NAV chart"></canvas>
+      <div class="note">
+        NAV is computed using fixed shares (set at inception) and daily closes. This is a model tear-sheet, not real-time pricing.
       </div>
     </div>
 
@@ -86,75 +258,397 @@ small{ color:var(--muted2); }
           <tr>
             <th>Asset</th>
             <th>Ticker</th>
-            <th>Shares</th>
-            <th>Entry</th>
-            <th>Current</th>
-            <th>Market Value</th>
-            <th>P/L ($)</th>
-            <th>P/L (%)</th>
+            <th class="mono">Shares</th>
+            <th class="mono">Entry</th>
+            <th class="mono">Last</th>
+            <th class="mono">Cost</th>
+            <th class="mono">Mkt Value</th>
+            <th class="mono">P/L ($)</th>
+            <th class="mono">P/L (%)</th>
+            <th>Stage</th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
 
+    <div class="details" id="thesisBlocks"></div>
+
+    <div class="note">
+      <strong>Disclosure:</strong> informational model portfolio only; not investment advice.
+      Prices are fetched client-side and may be delayed or unavailable.
+    </div>
   </section>
-</div>
+</main>
 
 <script>
-const TOTAL = 100000;
+/**
+ * ======= CONFIG (edit these only) =======
+ */
 
-// 🔧 EDIT CURRENT PRICES HERE (update weekly/daily)
-const prices = {
-  AGI: 45.10,
-  FSM: 9.82,
-  GAU: 2.41,
-  NFGC: 3.02,
-  VGZ: 2.21,
-  NEWP: 3.91
+// Total cash available
+const TOTAL_CAPITAL = 100000;
+
+// Inception date for performance (YYYY-MM-DD). Set this to your true start date.
+const INCEPTION_DATE = "2026-02-01";
+
+// Small allocations per stock (USD). Remaining stays as cash.
+// Tune these to whatever “very small allocation” means for you.
+const targetDollars = {
+  AGI: 2000,
+  FSM: 1500,
+  GAU: 1000,
+  NFGC: 800,
+  VGZ: 700,
+  NEWP: 1000
 };
 
-// 🔒 Your entries (locked)
-const positions = [
-  { name:"Alamos Gold", ticker:"AGI", shares:50, entry:42.855 },
-  { name:"Fortuna Mining", ticker:"FSM", shares:70, entry:10.46 },
-  { name:"Galiano Gold", ticker:"GAU", shares:150, entry:2.765 },
-  { name:"New Found Gold", ticker:"NFGC", shares:120, entry:2.735 },
-  { name:"Vista Gold", ticker:"VGZ", shares:180, entry:2.675 },
-  { name:"New Pacific Metals", ticker:"NEWP", shares:140, entry:3.58 }
-];
+// Your entry prices (provided)
+const entry = {
+  AGI: 42.855,
+  FSM: 10.46,
+  GAU: 2.765,
+  NFGC: 2.735,
+  VGZ: 2.675,
+  NEWP: 3.58
+};
 
-const rows = document.getElementById("rows");
-let invested = 0, totalPL = 0;
+// Stooq symbols. Most US listings use ".us" (lowercase).
+// If one doesn’t resolve, adjust the suffix (e.g. ".ca") to match the exchange on Stooq.
+const stooqSymbol = {
+  AGI:  "agi.us",
+  FSM:  "fsm.us",
+  GAU:  "gau.us",
+  NFGC: "nfgc.us",
+  VGZ:  "vgz.us",
+  NEWP: "newp.us"
+};
 
-positions.forEach(p=>{
-  const cur = prices[p.ticker];
-  const mv = p.shares * cur;
-  const cost = p.shares * p.entry;
-  const pl = mv - cost;
-  const plPct = (pl / cost) * 100;
+// Position metadata + theses
+const meta = {
+  AGI: { name:"Alamos Gold", stage:"Producer",
+    thesis:[
+      "Established producer; lower relative risk within miners.",
+      "Watch AISC trend and execution vs multi-year production guidance.",
+      "Sized small; thesis is cycle + execution, not certainty."
+    ],
+    watch:["AISC trend","guidance updates","capex vs FCF","jurisdiction risk"]
+  },
+  FSM: { name:"Fortuna Mining", stage:"Producer",
+    thesis:[
+      "Gold/silver hybrid exposure with geographic diversification.",
+      "Satellite position; thesis improves with margin expansion as metals recover.",
+      "Sized small due to miner beta and jurisdiction dispersion."
+    ],
+    watch:["cost control","jurisdiction stability","balance sheet","metal sensitivity"]
+  },
+  GAU: { name:"Galiano Gold", stage:"Turnaround / Small Cap",
+    thesis:[
+      "Turnaround/operational execution story in a smaller cap vehicle.",
+      "Upside tied to resource/operational improvements; single-asset concentration risk.",
+      "Sized small to reflect idiosyncratic risk."
+    ],
+    watch:["resource updates","operational KPIs","financing/dilution","country risk"]
+  },
+  NFGC: { name:"New Found Gold", stage:"Developer",
+    thesis:[
+      "High-grade discovery optionality; pre-revenue development risk.",
+      "Primary risk is financing/dilution + timeline uncertainty.",
+      "Very small sizing: asymmetric upside attempt."
+    ],
+    watch:["drill continuity","permits/mill path","financing terms","timeline"]
+  },
+  VGZ: { name:"Vista Gold", stage:"Developer",
+    thesis:[
+      "Long-dated gold leverage; value realization depends on project milestones.",
+      "High sensitivity to macro regime shifts; low carry while waiting.",
+      "Small sizing due to long timeline and project risk."
+    ],
+    watch:["milestones","partnering/financing","capex assumptions","jurisdiction"]
+  },
+  NEWP:{ name:"New Pacific Metals", stage:"Developer (Silver)",
+    thesis:[
+      "Silver optionality via large undeveloped projects.",
+      "High jurisdiction/political risk; sized accordingly.",
+      "Thesis: cycle exposure + project advancement."
+    ],
+    watch:["policy risk","community relations","resource advancement","silver cycle"]
+  }
+};
 
-  invested += mv;
-  totalPL += pl;
+/**
+ * ======= END CONFIG =======
+ */
 
-  const tr = document.createElement("tr");
-  tr.innerHTML = `
-    <td>${p.name}</td>
-    <td><strong>${p.ticker}</strong></td>
-    <td>${p.shares}</td>
-    <td>$${p.entry.toFixed(2)}</td>
-    <td><input value="${cur.toFixed(2)}" disabled /></td>
-    <td>$${mv.toFixed(0)}</td>
-    <td class="${pl>=0?'pos':'neg'}">$${pl.toFixed(0)}</td>
-    <td class="${pl>=0?'pos':'neg'}">${plPct.toFixed(2)}%</td>
-  `;
-  rows.appendChild(tr);
+// Derived fixed shares at inception based on target dollars and entry price
+const tickers = Object.keys(targetDollars);
+const shares = Object.fromEntries(
+  tickers.map(t => [t, targetDollars[t] / entry[t]])
+);
+
+const fmtUSD = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
+const fmtUSDCents = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:2});
+const fmtPct = n => (n>=0?"+":"") + n.toFixed(2) + "%";
+
+const el = id => document.getElementById(id);
+
+function csvParse(text){
+  const lines = text.trim().split(/\r?\n/);
+  const head = lines[0].split(",");
+  return lines.slice(1).map(line=>{
+    const cols = line.split(",");
+    const row = {};
+    head.forEach((h,i)=> row[h.trim()] = (cols[i] ?? "").trim());
+    return row;
+  });
+}
+
+// Fetch latest daily close from Stooq (last row)
+async function fetchLatestClose(sym){
+  const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(sym)}&i=d`;
+  const res = await fetch(url, {cache:"no-store"});
+  if(!res.ok) throw new Error(`Fetch failed for ${sym}: ${res.status}`);
+  const text = await res.text();
+  const rows = csvParse(text);
+  if(rows.length === 0) throw new Error(`No data for ${sym}`);
+  const last = rows[rows.length-1];
+  const close = Number(last.Close);
+  const date = last.Date;
+  if(!isFinite(close)) throw new Error(`Bad close for ${sym}`);
+  return {close, date};
+}
+
+// Fetch history since inception for NAV chart
+async function fetchHistorySince(sym, sinceDate){
+  const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(sym)}&i=d`;
+  const res = await fetch(url, {cache:"no-store"});
+  if(!res.ok) throw new Error(`Fetch failed for ${sym}: ${res.status}`);
+  const text = await res.text();
+  const rows = csvParse(text)
+    .filter(r => r.Date >= sinceDate)
+    .map(r => ({date:r.Date, close:Number(r.Close)}))
+    .filter(r => isFinite(r.close));
+  return rows;
+}
+
+function drawLineChart(canvas, series){
+  // series: [{date, nav}]
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // padding
+  const padL = 54, padR = 18, padT = 16, padB = 34;
+  const W = canvas.width, H = canvas.height;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  if(series.length < 2){
+    ctx.fillStyle = "rgba(11,18,32,.65)";
+    ctx.font = "14px system-ui";
+    ctx.fillText("Not enough history to render chart yet.", padL, padT+24);
+    return;
+  }
+
+  const navs = series.map(d=>d.nav);
+  const minV = Math.min(...navs);
+  const maxV = Math.max(...navs);
+  const span = (maxV - minV) || 1;
+
+  // grid
+  ctx.strokeStyle = "rgba(11,18,32,.10)";
+  ctx.lineWidth = 1;
+  for(let i=0;i<=4;i++){
+    const y = padT + (plotH * i/4);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+  }
+
+  // line
+  ctx.strokeStyle = "rgba(11,78,162,.95)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  series.forEach((d,i)=>{
+    const x = padL + plotW * (i/(series.length-1));
+    const y = padT + plotH * (1 - ((d.nav - minV)/span));
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // labels (min/max)
+  ctx.fillStyle = "rgba(11,18,32,.70)";
+  ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+  ctx.fillText(fmtUSD(maxV), 8, padT+10);
+  ctx.fillText(fmtUSD(minV), 8, padT+plotH);
+
+  // x labels (start/end)
+  const start = series[0].date;
+  const end = series[series.length-1].date;
+  ctx.fillStyle = "rgba(11,18,32,.55)";
+  ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+  ctx.fillText(start, padL, H-12);
+  const endW = ctx.measureText(end).width;
+  ctx.fillText(end, W-padR-endW, H-12);
+}
+
+function computeMaxDrawdown(series){
+  // series nav array
+  let peak = -Infinity, mdd = 0;
+  for(const v of series){
+    if(v > peak) peak = v;
+    const dd = (peak - v) / peak;
+    if(dd > mdd) mdd = dd;
+  }
+  return mdd;
+}
+
+async function render(){
+  el("totalCap").textContent = fmtUSD(TOTAL_CAPITAL);
+  el("asof").textContent = new Date().toLocaleDateString(undefined,{year:"numeric",month:"short",day:"2-digit"});
+  el("refreshed").textContent = "fetching…";
+
+  // 1) Latest prices
+  const latest = {};
+  let asofDate = null;
+
+  try{
+    await Promise.all(tickers.map(async t=>{
+      const {close, date} = await fetchLatestClose(stooqSymbol[t]);
+      latest[t] = close;
+      if(!asofDate || date > asofDate) asofDate = date;
+    }));
+  }catch(err){
+    el("refreshed").textContent = "error";
+    console.error(err);
+    alert("Price fetch failed for at least one symbol. Check your stooqSymbol mapping (e.g. .us/.ca) and try again.");
+    return;
+  }
+
+  el("refreshed").textContent = `${asofDate ?? "—"} close`;
+
+  // 2) Table + portfolio P/L
+  const tbody = el("rows");
+  tbody.innerHTML = "";
+
+  let invested = 0;
+  let costTotal = 0;
+  let plTotal = 0;
+
+  for(const t of tickers){
+    const sh = shares[t];
+    const px = latest[t];
+    const mv = sh * px;
+    const cost = sh * entry[t];
+    const pl = mv - cost;
+    const plPct = (pl / cost) * 100;
+
+    invested += mv;
+    costTotal += cost;
+    plTotal += pl;
+
+    const cls = pl >= 0 ? "pos" : "neg";
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>
+        <strong>${meta[t].name}</strong><br/>
+        <small>${meta[t].stage}</small>
+      </td>
+      <td class="mono"><strong>${t}</strong></td>
+      <td class="mono">${sh.toFixed(4)}</td>
+      <td class="mono">${fmtUSDCents(entry[t])}</td>
+      <td class="mono">${fmtUSDCents(px)}</td>
+      <td class="mono">${fmtUSD(cost)}</td>
+      <td class="mono">${fmtUSD(mv)}</td>
+      <td class="mono ${cls}">${fmtUSD(pl)}</td>
+      <td class="mono ${cls}">${fmtPct(plPct)}</td>
+      <td>${meta[t].stage}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  const cash = Math.max(0, TOTAL_CAPITAL - invested);
+  const portValue = invested + cash;
+  const since = ((portValue / TOTAL_CAPITAL) - 1) * 100;
+
+  el("portValue").textContent = fmtUSD(portValue);
+  el("portPL").textContent = (plTotal>=0?"+":"") + fmtUSD(plTotal);
+  el("sinceInception").textContent = fmtPct(since);
+
+  // 3) Theses blocks
+  const thesisWrap = el("thesisBlocks");
+  thesisWrap.innerHTML = "";
+  for(const t of tickers){
+    const d = document.createElement("details");
+    d.innerHTML = `
+      <summary>${meta[t].name} <span class="mono" style="color:var(--muted2); font-weight:650;">(${t})</span></summary>
+      <div class="note" style="border-top:none; padding-top:8px;">
+        <div class="kicker" style="margin:0 0 6px;">Thesis</div>
+        <ul style="margin:0 0 10px 18px; color:var(--muted);">
+          ${meta[t].thesis.map(x=>`<li>${x}</li>`).join("")}
+        </ul>
+        <div class="kicker" style="margin:0 0 6px;">What to watch</div>
+        <div class="tags">
+          ${meta[t].watch.map(w=>`<span class="tag">${w}</span>`).join("")}
+        </div>
+      </div>
+    `;
+    thesisWrap.appendChild(d);
+  }
+
+  // 4) Performance since inception chart (aggregate daily closes)
+  // Build a date->price map per ticker, then compute daily NAV for intersection of dates.
+  const histories = {};
+  await Promise.all(tickers.map(async t=>{
+    histories[t] = await fetchHistorySince(stooqSymbol[t], INCEPTION_DATE);
+  }));
+
+  // Create lookup maps
+  const maps = {};
+  for(const t of tickers){
+    maps[t] = new Map(histories[t].map(r => [r.date, r.close]));
+  }
+
+  // Intersection dates across all tickers
+  const dateSets = tickers.map(t => new Set(histories[t].map(r=>r.date)));
+  const dates = [...dateSets[0]].filter(d => dateSets.every(s => s.has(d))).sort();
+
+  const series = dates.map(date=>{
+    let mv = 0;
+    for(const t of tickers){
+      mv += shares[t] * maps[t].get(date);
+    }
+    const nav = mv + Math.max(0, TOTAL_CAPITAL - (tickers.reduce((s,t)=>s + (shares[t]*maps[t].get(date)),0)));
+    // Note: cash is held constant in USD (model). This keeps NAV conservative and stable.
+    return {date, nav};
+  });
+
+  // Optional: compute and show MDD / simple stats (you can add to UI later)
+  const navs = series.map(s=>s.nav);
+  const mdd = computeMaxDrawdown(navs);
+
+  // Draw chart
+  drawLineChart(el("navChart"), series);
+
+  // Append a tiny stat line under chart (non-intrusive)
+  const note = document.querySelector(".chartbox .note");
+  note.innerHTML = `NAV computed from daily closes since <span class="mono">${INCEPTION_DATE}</span>. Max drawdown (NAV): <span class="mono">${(mdd*100).toFixed(2)}%</span>.`;
+}
+
+// Expand/collapse theses
+let expanded = false;
+document.getElementById("toggleThesisBtn").addEventListener("click", ()=>{
+  const blocks = document.querySelectorAll("#thesisBlocks details");
+  expanded = !expanded;
+  blocks.forEach(d => d.open = expanded);
+  document.getElementById("toggleThesisBtn").textContent = expanded ? "Collapse all theses" : "Expand all theses";
 });
 
-document.getElementById("invested").textContent = "$" + invested.toFixed(0);
-document.getElementById("cash").textContent = "$" + (TOTAL - invested).toFixed(0);
-document.getElementById("pl").textContent = (totalPL>=0?"+":"") + "$" + totalPL.toFixed(0);
-</script>
+// Manual refresh
+document.getElementById("refreshBtn").addEventListener("click", ()=>{
+  render();
+});
 
+// Initial render
+render();
+</script>
 </body>
 </html>
