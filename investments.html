@@ -49,12 +49,13 @@
           <div>
             <div class="p-title">Model Portfolio (Local)</div>
             <div class="p-sub">
-              Starts with <b>$100,000</b> USD. Prices are manually entered (saved in your browser). Charts are embedded on the right.
+              Starts with <b>$100,000</b> USD. Prices are saved in your browser and can auto-fill from <code>/data/prices.json</code>.
             </div>
+            <div class="p-sub">Price feed last updated: <b id="priceAsOf">—</b></div>
           </div>
           <div class="p-actions">
-            <button class="p-btn" id="btnReset">Reset to default</button>
-            <button class="p-btn" id="btnClearPrices">Clear prices</button>
+            <button class="p-btn" id="btnReset" type="button">Reset to default</button>
+            <button class="p-btn" id="btnClearPrices" type="button">Clear prices</button>
           </div>
         </div>
 
@@ -82,8 +83,8 @@
         </div>
 
         <div class="note" style="margin-top:14px;">
-          <b>How it works:</b> Enter your <b>Entry Price</b> and <b>Current Price</b> for each name. Shares are calculated from the allocation.
-          Everything saves automatically in your browser.
+          <b>How it works:</b> Entry and current prices can auto-fill from <code>/data/prices.json</code>. If you type over a value,
+          your manual number is kept. Shares are calculated from allocation ÷ entry price.
         </div>
 
         <div style="height:14px;"></div>
@@ -266,23 +267,28 @@
     </div>
   </footer>
 
-  <!-- Portfolio engine (client-side only) -->
+  <!-- Portfolio engine (client-side + pulls /data/prices.json when available) -->
   <script>
-    const STORAGE_KEY = "mbd_portfolio_v1";
+    // ===== Config =====
+    const STORAGE_KEY = "mbd_portfolio_v2";
+    const ENTRY_DATE = "2026-02-11"; // trade entry date (market open)
 
+    // Default allocations (total = $100,000)
     const DEFAULT_PORTFOLIO = {
       baseCurrency: "USD",
       startingCash: 100000,
+      entryDate: ENTRY_DATE,
       holdings: [
-        { name:"Alamos Gold", ticker:"AGI", risk:"Lower", allocation: 28000, entry: "", current: "" },
-        { name:"Fortuna Mining", ticker:"FSM", risk:"Lower", allocation: 22000, entry: "", current: "" },
-        { name:"Galiano Gold", ticker:"GAU", risk:"Medium", allocation: 18000, entry: "", current: "" },
-        { name:"Newfound Gold", ticker:"NFGC", risk:"Higher", allocation: 12000, entry: "", current: "" },
-        { name:"Vista Gold", ticker:"VGZ", risk:"Higher", allocation:  8000, entry: "", current: "" },
-        { name:"New Pacific Metals", ticker:"NEWP", risk:"Higher", allocation: 12000, entry: "", current: "" },
+        { name:"Alamos Gold",        ticker:"AGI",  risk:"Lower",  allocation: 28000, entry: "", current: "" },
+        { name:"Fortuna Mining",     ticker:"FSM",  risk:"Lower",  allocation: 22000, entry: "", current: "" },
+        { name:"Galiano Gold",       ticker:"GAU",  risk:"Medium", allocation: 18000, entry: "", current: "" },
+        { name:"Newfound Gold",      ticker:"NFGC", risk:"Higher", allocation: 12000, entry: "", current: "" },
+        { name:"Vista Gold",         ticker:"VGZ",  risk:"Higher", allocation:  8000, entry: "", current: "" },
+        { name:"New Pacific Metals", ticker:"NEWP", risk:"Higher", allocation: 12000, entry: "", current: "" }
       ]
     };
 
+    // ===== Helpers =====
     function money(n){
       if (n === null || n === undefined || Number.isNaN(n)) return "—";
       return n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
@@ -295,12 +301,22 @@
       if (n === null || n === undefined || Number.isNaN(n)) return "—";
       return (n*100).toFixed(2) + "%";
     }
+    function fmtTime(iso){
+      if (!iso) return "—";
+      try{
+        const d = new Date(iso);
+        return d.toLocaleString();
+      }catch{
+        return iso;
+      }
+    }
+    function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
 
     function loadPortfolio(){
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return structuredClone(DEFAULT_PORTFOLIO);
+      if (!raw) return clone(DEFAULT_PORTFOLIO);
       try { return JSON.parse(raw); }
-      catch { return structuredClone(DEFAULT_PORTFOLIO); }
+      catch { return clone(DEFAULT_PORTFOLIO); }
     }
     function savePortfolio(p){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
@@ -310,7 +326,6 @@
       const entry = parseFloat(h.entry);
       const current = parseFloat(h.current);
 
-      // shares computed from allocation and entry price if provided
       let shares = null;
       if (!Number.isNaN(entry) && entry > 0) shares = h.allocation / entry;
 
@@ -320,12 +335,14 @@
         pnl = mkt - h.allocation;
         pnlPct = pnl / h.allocation;
       }
-      return { entry, current, shares, mkt, pnl, pnlPct };
+      return { shares, mkt, pnl, pnlPct };
     }
 
     function render(){
       const p = loadPortfolio();
       const body = document.getElementById("holdingsBody");
+      if (!body) return;
+
       body.innerHTML = "";
 
       let invested = 0;
@@ -340,41 +357,70 @@
         if (r.pnl !== null) pnlTotal += r.pnl;
 
         const tr = document.createElement("tr");
-
         tr.innerHTML = `
-          <td>
-            <div><b>${h.name}</b> <small>(${h.ticker})</small></div>
-          </td>
+          <td><div><b>${h.name}</b> <small>(${h.ticker})</small></div></td>
           <td>${h.risk}</td>
           <td>${money(h.allocation)}</td>
-          <td><input class="p-in" inputmode="decimal" placeholder="e.g. 12.34" value="${h.entry}" data-idx="${idx}" data-field="entry"></td>
-          <td><input class="p-in" inputmode="decimal" placeholder="e.g. 13.10" value="${h.current}" data-idx="${idx}" data-field="current"></td>
+          <td><input class="p-in" inputmode="decimal" placeholder="auto" value="${h.entry}" data-idx="${idx}" data-field="entry"></td>
+          <td><input class="p-in" inputmode="decimal" placeholder="auto" value="${h.current}" data-idx="${idx}" data-field="current"></td>
           <td>${r.shares === null ? "—" : r.shares.toFixed(4)}</td>
           <td>${r.mkt === null ? "—" : money2(r.mkt)}</td>
           <td class="${r.pnl === null ? "" : (r.pnl >= 0 ? "pos" : "neg")}">${r.pnl === null ? "—" : money2(r.pnl)}</td>
           <td class="${r.pnlPct === null ? "" : (r.pnlPct >= 0 ? "pos" : "neg")}">${r.pnlPct === null ? "—" : pct(r.pnlPct)}</td>
         `;
-
         body.appendChild(tr);
       });
 
       const cash = Math.max(0, p.startingCash - invested);
       const net = cash + mktTotal;
 
-      document.getElementById("kpiCash").textContent = money(cash);
-      document.getElementById("kpiExposure").textContent = money2(mktTotal);
-      document.getElementById("kpiNet").textContent = money2(net);
-      document.getElementById("kpiPnL").textContent = (pnlTotal === 0 && mktTotal === 0) ? "$—" : money2(pnlTotal);
+      const kCash = document.getElementById("kpiCash");
+      const kExp = document.getElementById("kpiExposure");
+      const kNet = document.getElementById("kpiNet");
+      const kPnL = document.getElementById("kpiPnL");
+      const kPnLSub = document.getElementById("kpiPnLSub");
+      const kNetSub = document.getElementById("kpiNetSub");
 
-      // sublabels
-      document.getElementById("kpiPnLSub").textContent = (mktTotal === 0) ? "Enter prices to compute" : "Sum of holdings P&L";
-      document.getElementById("kpiNetSub").textContent = (mktTotal === 0) ? "Cash only until priced" : "Cash + market value";
+      if (kCash) kCash.textContent = money(cash);
+      if (kExp)  kExp.textContent  = money2(mktTotal);
+      if (kNet)  kNet.textContent  = money2(net);
+      if (kPnL)  kPnL.textContent  = (mktTotal === 0) ? "$—" : money2(pnlTotal);
+
+      if (kPnLSub) kPnLSub.textContent = (mktTotal === 0) ? "Enter prices to compute" : "Sum of holdings P&L";
+      if (kNetSub) kNetSub.textContent = (mktTotal === 0) ? "Cash only until priced" : "Cash + market value";
+    }
+
+    async function applyAutoPrices(){
+      try{
+        const res = await fetch("/data/prices.json", { cache: "no-store" });
+        if (!res.ok) return;
+
+        const data = await res.json();
+        const p = loadPortfolio();
+
+        const asOfEl = document.getElementById("priceAsOf");
+        if (asOfEl) asOfEl.textContent = fmtTime(data.asOf);
+
+        for (const h of p.holdings){
+          const q = data.quotes && data.quotes[h.ticker];
+          if (!q) continue;
+
+          // Only auto-fill if field is empty (manual override wins)
+          if (!h.current && q.close != null && q.close !== "") h.current = String(q.close);
+          if (!h.entry   && q.open  != null && q.open  !== "") h.entry   = String(q.open);
+        }
+
+        savePortfolio(p);
+        render();
+      }catch(e){
+        // silent fail
+      }
     }
 
     function wire(){
       document.addEventListener("input", (e) => {
         const t = e.target;
-        if (!t.classList.contains("p-in")) return;
+        if (!t.classList || !t.classList.contains("p-in")) return;
 
         const idx = parseInt(t.getAttribute("data-idx"), 10);
         const field = t.getAttribute("data-field");
@@ -385,21 +431,33 @@
         render();
       });
 
-      document.getElementById("btnReset").addEventListener("click", () => {
-        savePortfolio(structuredClone(DEFAULT_PORTFOLIO));
-        render();
-      });
+      const btnReset = document.getElementById("btnReset");
+      if (btnReset){
+        btnReset.addEventListener("click", () => {
+          savePortfolio(clone(DEFAULT_PORTFOLIO));
+          render();
+          applyAutoPrices();
+        });
+      }
 
-      document.getElementById("btnClearPrices").addEventListener("click", () => {
-        const p = loadPortfolio();
-        p.holdings = p.holdings.map(h => ({...h, entry:"", current:""}));
-        savePortfolio(p);
-        render();
-      });
+      const btnClear = document.getElementById("btnClearPrices");
+      if (btnClear){
+        btnClear.addEventListener("click", () => {
+          const p = loadPortfolio();
+          p.holdings = p.holdings.map(h => ({...h, entry:"", current:""}));
+          savePortfolio(p);
+          render();
+          applyAutoPrices();
+        });
+      }
+
+      // Refresh hourly while page is open
+      setInterval(() => applyAutoPrices(), 60 * 60 * 1000);
     }
 
     wire();
     render();
+    applyAutoPrices();
   </script>
 </body>
 </html>
