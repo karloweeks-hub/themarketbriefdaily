@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Investments | The Market Brief Daily</title>
   <meta name="description" content="Watchlist and research notes for selected metals equities and development-stage projects." />
-  <meta name="theme-color" content="#07101b" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 
@@ -14,201 +14,242 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">
-        <a class="brand-mark" href="/" aria-label="The Market Brief Daily Home">
-          <img class="brand-logo" src="/assets/images/logo.png" alt="MarketBriefDaily logo" />
-          <span class="brand-text">The Market Brief Daily</span>
-        </a>
-        <div class="brand-sub">Market structure • Physical supply • Macro transmission</div>
-      </div>
+      <a class="brand" href="/" aria-label="Home">
+        <img class="brand-logo" src="/assets/images/logo.png" alt="The Market Brief Daily logo" />
+        <span class="brand-stack">
+          <span class="brand-title">The Market Brief Daily</span>
+          <span class="brand-sub">Market structure • Physical supply • Macro transmission</span>
+        </span>
+      </a>
 
       <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/posts.html">Posts</a>
-        <a class="nav-link is-active" href="/investments.html">Investments</a>
-        <a class="nav-link" href="/about.html">About</a>
-        <a class="nav-link" href="/contact.html">Contact</a>
+        <a href="/">Home</a>
+        <a href="/posts.html">Posts</a>
+        <a class="is-active" href="/investments.html">Investments</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main id="content" class="section">
+  <main id="content" class="page">
     <div class="container">
-      <div class="card">
-        <div class="card-kicker">Investments</div>
-        <h1 class="card-title">Watchlist / Research List</h1>
-        <p class="card-sub">
-          This page is a structured list of securities discussed for research purposes. It can function as a watchlist or model framework.
-          Entries emphasize the mechanism and the risk factors—rather than price targets.
+      <header class="page-header">
+        <div class="page-kicker">Investments</div>
+        <h1 class="page-title">Watchlist / research list</h1>
+        <p class="page-lead">
+          A structured list of names discussed for research purposes. Not investment advice. Mining equities and
+          development-stage projects are high risk and volatile. See <a href="/disclaimer.html">disclaimer</a>.
         </p>
+      </header>
 
-        <div class="note">
-          <div class="note-title">Important disclosure</div>
-          <p class="muted" style="margin:0;">
-            This is not investment advice. Mining equities and development-stage projects are high-risk and can be volatile.
-            Information may be incomplete or outdated. Do your own research and consult a qualified professional.
-            See the <a href="/disclaimer.html">full disclaimer</a>.
+      <div class="inv-grid">
+
+        <!-- LEFT: thesis notes -->
+        <section aria-label="Watchlist notes">
+          <div class="kicker">Framework</div>
+          <h2>Risk framing</h2>
+          <p class="lead">
+            Treat each name as: thesis → indicators → invalidation → sizing. Development-stage equities require strict risk control.
           </p>
-        </div>
 
-        <hr class="divider" />
-
-        <div class="card-kicker">Risk framework</div>
-        <div class="post-list">
-          <div class="post-item">
-            <div class="post-meta">
-              <span class="tag">Lower risk</span>
-              <span class="tiny">Established producers</span>
+          <div class="inv-card">
+            <div class="inv-head">
+              <div class="inv-name">Alamos Gold (AGI) — Established Canadian producer</div>
+              <div class="inv-meta">Lower risk</div>
             </div>
-            <p class="post-excerpt" style="margin:0;">
-              Operating mines, cash flow, and clearer cost structure (still subject to commodity-price and jurisdiction risk).
-            </p>
+            <div class="inv-body">
+              <p><b>Why it’s on the list:</b> Potential production growth (guidance), operating scale, and clearer cost structure versus early-stage developers.</p>
+              <p><b>Primary risks:</b> execution on growth plans, cost inflation, and commodity-price sensitivity.</p>
+            </div>
           </div>
 
-          <div class="post-item">
-            <div class="post-meta">
-              <span class="tag tag-blue">Medium risk</span>
-              <span class="tiny">Small-cap / turnaround</span>
+          <div class="inv-card">
+            <div class="inv-head">
+              <div class="inv-name">Fortuna Mining (FSM) — Gold/Silver hybrid</div>
+              <div class="inv-meta">Lower risk</div>
             </div>
-            <p class="post-excerpt" style="margin:0;">
-              More operational concentration, higher sensitivity to execution and news flow.
-            </p>
+            <div class="inv-body">
+              <p><b>Why it’s on the list:</b> Multi-asset exposure with geographic diversification; can reduce single-country dependence.</p>
+              <p><b>Primary risks:</b> jurisdiction and operational risk across regions; cost control; metals-price volatility.</p>
+            </div>
           </div>
 
-          <div class="post-item">
-            <div class="post-meta">
-              <span class="tag tag-blue">Higher risk</span>
-              <span class="tiny">Development-stage</span>
+          <div class="inv-card">
+            <div class="inv-head">
+              <div class="inv-name">Galiano Gold (GAU) — Turnaround small cap</div>
+              <div class="inv-meta">Medium risk</div>
             </div>
-            <p class="post-excerpt" style="margin:0;">
-              Pre-revenue timelines, permitting, financing/dilution risk, and higher geopolitical sensitivity.
-            </p>
+            <div class="inv-body">
+              <p><b>Why it’s on the list:</b> Asymmetric outcomes if the operating story improves; exploration and resource updates can move the equity.</p>
+              <p><b>Primary risks:</b> single-asset concentration; higher volatility; operational execution.</p>
+            </div>
           </div>
-        </div>
 
-        <div style="height:16px;"></div>
-
-        <div class="card-kicker">Listed equities</div>
-        <div class="post-list">
-
-          <!-- 1) Alamos Gold -->
-          <article class="post-item">
-            <div class="post-meta">
-              <span class="tag">Lower risk</span>
-              <span class="tiny">Stock 1</span>
+          <div class="inv-card">
+            <div class="inv-head">
+              <div class="inv-name">Newfound Gold (NFGC) — High-grade Canadian discovery</div>
+              <div class="inv-meta">Higher risk</div>
             </div>
-            <div class="post-title">Alamos Gold (AGI) — Established Canadian producer</div>
-            <p class="post-excerpt">
-              <strong>Why it’s on the list:</strong> Management guidance indicates a potential production ramp over the next several years (guidance is not a guarantee).
-              The company has operating scale, cash-flow characteristics typical of an established producer, and a clearer cost framework.
-            </p>
-            <p class="post-excerpt">
-              <strong>Key operational notes (as described):</strong> AISC discussed in the ~$1,200–$1,300 range; meaningful capex planned to expand output toward a larger annual profile,
-              which can reduce near-term returns but may improve long-run earnings power if execution is strong.
-            </p>
-            <p class="post-excerpt">
-              <strong>Primary risks:</strong> execution risk on growth plans, commodity-price volatility, cost inflation, and the usual mining operational risks.
-            </p>
-          </article>
-
-          <!-- 2) Fortuna Mining -->
-          <article class="post-item">
-            <div class="post-meta">
-              <span class="tag">Lower risk</span>
-              <span class="tiny">Stock 2</span>
+            <div class="inv-body">
+              <p><b>Why it’s on the list:</b> High-grade discovery potential; catalysts are typically drilling/results and development milestones.</p>
+              <p><b>Primary risks:</b> pre-revenue development; financing/dilution; timeline slippage; permitting.</p>
             </div>
-            <div class="post-title">Fortuna Mining (FSM) — Gold/Silver hybrid</div>
-            <p class="post-excerpt">
-              <strong>Why it’s on the list:</strong> A multi-asset producer with geographic diversification (Africa + South America, per your notes),
-              which can reduce single-country exposure versus a one-jurisdiction operator.
-            </p>
-            <p class="post-excerpt">
-              <strong>How to think about entries (framework, not advice):</strong> You referenced the “heartbeat” consolidation/breakout pattern and waiting for confirmation
-              (breakout levels / highest close). This is a monitoring framework rather than a recommendation.
-            </p>
-            <p class="post-excerpt">
-              <strong>Primary risks:</strong> jurisdictional and operational risk across multiple regions; commodity-price sensitivity; execution and cost control.
-            </p>
-          </article>
+          </div>
 
-          <!-- 3) Galiano Gold -->
-          <article class="post-item">
-            <div class="post-meta">
-              <span class="tag tag-blue">Medium risk</span>
-              <span class="tiny">Stock 3</span>
+          <div class="inv-card">
+            <div class="inv-head">
+              <div class="inv-name">Vista Gold (VGZ) — Australian leverage play</div>
+              <div class="inv-meta">Higher risk</div>
             </div>
-            <div class="post-title">Galiano Gold (GAU) — Turnaround small cap</div>
-            <p class="post-excerpt">
-              <strong>Why it’s on the list:</strong> Smaller market cap and “turnaround” characteristics can create asymmetric outcomes if the operating story improves.
-              You highlighted exploration spending and targeted underground potential with notable grade commentary.
-            </p>
-            <p class="post-excerpt">
-              <strong>What to watch:</strong> updated resource estimates, exploration results, and milestone delivery (these tend to move small caps disproportionately).
-            </p>
-            <p class="post-excerpt">
-              <strong>Primary risks:</strong> single-asset concentration, operational disruption risk, and higher volatility typical of small caps.
-            </p>
-          </article>
-
-          <!-- 4) Newfound Gold -->
-          <article class="post-item">
-            <div class="post-meta">
-              <span class="tag tag-blue">Higher risk</span>
-              <span class="tiny">Stock 4</span>
+            <div class="inv-body">
+              <p><b>Why it’s on the list:</b> Single-asset development exposure can behave like leveraged beta to gold under the right conditions.</p>
+              <p><b>Primary risks:</b> no operating revenue; long timelines; financing requirements.</p>
             </div>
-            <div class="post-title">Newfound Gold (NFGC) — High-grade Canadian discovery</div>
-            <p class="post-excerpt">
-              <strong>Why it’s on the list:</strong> You cited extremely high grades relative to typical gold operations and a development timeline that—if successful—
-              could be meaningful. High-grade discoveries can attract attention, capital, and strategic interest.
-            </p>
-            <p class="post-excerpt">
-              <strong>Primary risks:</strong> pre-revenue development (financing and dilution risk), timeline slippage, permitting, and the gap between discovery excitement and
-              economic mine development.
-            </p>
-          </article>
+          </div>
 
-          <!-- 5) Vista Gold -->
-          <article class="post-item">
-            <div class="post-meta">
-              <span class="tag tag-blue">Higher risk</span>
-              <span class="tiny">Stock 5</span>
+          <div class="inv-card">
+            <div class="inv-head">
+              <div class="inv-name">New Pacific Metals (NEWP) — Bolivia silver development</div>
+              <div class="inv-meta">Higher risk</div>
             </div>
-            <div class="post-title">Vista Gold (VGZ) — Australian leverage play</div>
-            <p class="post-excerpt">
-              <strong>Why it’s on the list:</strong> Single-asset development exposure can behave like “pure leverage” to the gold price under the right conditions.
-              You referenced a large, underdeveloped deposit and valuation sensitivity to gold-price assumptions.
-            </p>
-            <p class="post-excerpt">
-              <strong>Primary risks:</strong> no operating revenue, long timelines (late-decade execution), financing requirements, and the reality that commodity-price leverage cuts both ways.
-            </p>
-          </article>
-
-          <!-- 6) New Pacific Metals -->
-          <article class="post-item">
-            <div class="post-meta">
-              <span class="tag tag-blue">Higher risk</span>
-              <span class="tiny">Stock 6</span>
+            <div class="inv-body">
+              <p><b>Why it’s on the list:</b> Large undeveloped silver projects; potential upside if silver is bullish and the project de-risks.</p>
+              <p><b>Primary risks:</b> geopolitical risk; community relations; nationalization history; silver volatility.</p>
             </div>
-            <div class="post-title">New Pacific Metals (NEWP) — Bolivia silver development</div>
-            <p class="post-excerpt">
-              <strong>Why it’s on the list:</strong> You framed this as the silver-side development exposure: large undeveloped projects can offer upside if silver is bullish
-              and the project de-risks. You also noted improving site control/security dynamics.
-            </p>
-            <p class="post-excerpt">
-              <strong>Primary risks:</strong> country/geopolitical risk (including nationalization history), community relations, and silver’s higher volatility versus gold.
-              This category can be high-upside but requires strict risk sizing and monitoring.
-            </p>
-          </article>
+          </div>
 
-        </div>
+          <div class="note">
+            <b>Disclosure:</b> informational only; not investment advice. For limitations and conflicts, see the <a href="/disclaimer.html">disclaimer</a>.
+          </div>
+        </section>
 
-        <div class="note">
-          <div class="note-title">Practical use</div>
-          <p class="muted" style="margin:0;">
-            Treat this page as a monitoring framework: thesis → indicators → invalidation → risk notes.
-            If you want, we can add “what to watch next” bullet points per name (earnings, permits, resource updates, etc.).
-          </p>
-        </div>
+        <!-- RIGHT: prices/charts -->
+        <aside aria-label="Prices and charts">
+          <div class="kicker">Market data</div>
+          <h2>Prices & mini charts</h2>
+          <p class="lead">Embedded from TradingView. If a symbol doesn’t load, adjust its exchange prefix.</p>
+
+          <div class="tv-stack">
+
+            <!-- AGI -->
+            <div class="tv-box">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                  "symbol": "NYSE:AGI",
+                  "width": "100%",
+                  "height": "220",
+                  "locale": "en",
+                  "dateRange": "12M",
+                  "colorTheme": "light",
+                  "isTransparent": false,
+                  "autosize": true,
+                  "largeChartUrl": "",
+                  "chartOnly": false
+                }
+                </script>
+              </div>
+            </div>
+
+            <!-- FSM -->
+            <div class="tv-box">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                  "symbol": "NYSE:FSM",
+                  "width": "100%",
+                  "height": "220",
+                  "locale": "en",
+                  "dateRange": "12M",
+                  "colorTheme": "light",
+                  "isTransparent": false,
+                  "autosize": true
+                }
+                </script>
+              </div>
+            </div>
+
+            <!-- GAU -->
+            <div class="tv-box">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                  "symbol": "NYSEAMERICAN:GAU",
+                  "width": "100%",
+                  "height": "220",
+                  "locale": "en",
+                  "dateRange": "12M",
+                  "colorTheme": "light",
+                  "isTransparent": false,
+                  "autosize": true
+                }
+                </script>
+              </div>
+            </div>
+
+            <!-- NFGC -->
+            <div class="tv-box">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                  "symbol": "NYSEAMERICAN:NFGC",
+                  "width": "100%",
+                  "height": "220",
+                  "locale": "en",
+                  "dateRange": "12M",
+                  "colorTheme": "light",
+                  "isTransparent": false,
+                  "autosize": true
+                }
+                </script>
+              </div>
+            </div>
+
+            <!-- VGZ -->
+            <div class="tv-box">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                  "symbol": "NYSEAMERICAN:VGZ",
+                  "width": "100%",
+                  "height": "220",
+                  "locale": "en",
+                  "dateRange": "12M",
+                  "colorTheme": "light",
+                  "isTransparent": false,
+                  "autosize": true
+                }
+                </script>
+              </div>
+            </div>
+
+            <!-- NEWP (might be TSX/TSXV depending on listing) -->
+            <div class="tv-box">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                  "symbol": "NYSE:NEWP",
+                  "width": "100%",
+                  "height": "220",
+                  "locale": "en",
+                  "dateRange": "12M",
+                  "colorTheme": "light",
+                  "isTransparent": false,
+                  "autosize": true
+                }
+                </script>
+              </div>
+            </div>
+
+          </div>
+        </aside>
 
       </div>
     </div>
@@ -218,9 +259,9 @@
     <div class="container footer-inner">
       <div>
         <div class="footer-brand">The Market Brief Daily</div>
-        <div class="footer-muted">Market structure & physical supply analysis.</div>
+        <div class="footer-sub">Market structure & physical supply analysis.</div>
       </div>
-      <div class="footer-right">
+      <div class="footer-links">
         <a href="/posts.html">Posts</a>
         <a href="/about.html">About</a>
         <a href="/disclaimer.html">Disclaimer</a>
