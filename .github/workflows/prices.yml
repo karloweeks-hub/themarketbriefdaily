@@ -1,0 +1,73 @@
+name: Update prices.json
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # hourly
+  workflow_dispatch:       # allow manual run
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build prices.json
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p data
+
+          # Symbols you track (simple tickers; map if needed later)
+          SYMS=("AGI" "FSM" "GAU" "NFGC" "VGZ" "NEWP")
+
+          # ---- Quote fetch (simple, no auth) ----
+          # Using Stooq-style CSV as a lightweight source.
+          # If you later move to a different provider, change this block only.
+          # Note: Some tickers may require exchange suffix; adjust if a symbol comes back empty.
+          now="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+          json_quotes=""
+          for s in "${SYMS[@]}"; do
+            # stooq uses lowercase tickers; US often works as {ticker}.us
+            t="$(echo "$s" | tr '[:upper:]' '[:lower:]')"
+            url="https://stooq.com/q/l/?s=${t}.us&i=1"
+            csv="$(curl -fsSL "$url" || true)"
+
+            # CSV format: Symbol,Date,Time,Open,High,Low,Close,Volume
+            # We treat "Close" as the latest print for simplicity.
+            close="$(echo "$csv" | tail -n 1 | awk -F',' '{print $7}')"
+
+            if [[ -z "$close" || "$close" == "N/D" ]]; then
+              close="null"
+            fi
+
+            if [[ -n "$json_quotes" ]]; then
+              json_quotes="${json_quotes},"
+            fi
+            json_quotes="${json_quotes}\"${s}\": ${close}"
+          done
+
+          cat > data/prices.json <<EOF
+          {
+            "asOf": "${now}",
+            "quotes": {
+              ${json_quotes}
+            }
+          }
+          EOF
+
+          echo "Wrote data/prices.json"
+          cat data/prices.json
+
+      - name: Commit & push
+        run: |
+          git config user.name "marketbriefdaily-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/prices.json
+          git commit -m "Update prices.json" || exit 0
+          git push
