@@ -1,0 +1,41 @@
+name: Update intraday quotes
+
+on:
+  workflow_dispatch:
+  schedule:
+    # every 30 minutes (UTC). You can change it.
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: quotes-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch quotes
+        env:
+          ALPHAVANTAGE_KEY: ${{ secrets.ALPHAVANTAGE_KEY }}
+        run: |
+          python scripts/fetch_quotes.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "quotes-bot"
+          git config user.email "quotes-bot@users.noreply.github.com"
+          git add data/quotes.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Update quotes.json"
+          git push
