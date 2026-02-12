@@ -1,7 +1,14 @@
 {
-  "asof_iso": "1970-01-01T00:00:00Z",
-  "last_trading_day": "—",
+  "asof_iso": "2026-02-12T23:23:48.635965+00:00",
+  "last_trading_day": "\u2014",
   "source": "alphavantage",
   "prices": {},
-  "errors": {}
+  "errors": {
+    "AGI": "Information: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints",
+    "FSM": "Information: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints",
+    "GAU": "Information: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints",
+    "NFGC": "Information: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints",
+    "VGZ": "Information: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints",
+    "NEWP": "Information: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints"
+  }
 }
