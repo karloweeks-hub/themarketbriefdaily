@@ -1,16 +1,13 @@
 import json
-import os
 import time
 from datetime import datetime, timezone
 import urllib.request
 import urllib.parse
 
-# Hardcoded (you requested this)
 API_KEY = "GUY8S89NSG15NVYH"
 
-# IMPORTANT:
-# Alpha Vantage often needs exchange suffixes for non-US listings.
-# If a symbol returns no data, change it here (e.g. "AGI.TO", "NFG.TO", etc).
+# Try these first. If some fail, we'll see it in errors.
+# If a ticker is Canadian/TSX and fails, you may need ".TO" mapping here.
 SYMBOLS = {
     "AGI": "AGI",
     "FSM": "FSM",
@@ -20,45 +17,65 @@ SYMBOLS = {
     "NEWP": "NEWP",
 }
 
-INTERVAL = "5min"   # intraday cadence
+INTRADAY_INTERVAL = "5min"
 
-def http_get_json(url: str):
+def http_get_json(params: dict) -> dict:
+    url = "https://www.alphavantage.co/query?" + urllib.parse.urlencode(params)
     with urllib.request.urlopen(url, timeout=30) as resp:
         raw = resp.read().decode("utf-8", errors="replace")
     return json.loads(raw)
 
-def fetch_latest_intraday(av_symbol: str):
-    # TIME_SERIES_INTRADAY is more reliable than GLOBAL_QUOTE
-    params = {
-        "function": "TIME_SERIES_INTRADAY",
-        "symbol": av_symbol,
-        "interval": INTERVAL,
-        "outputsize": "compact",
-        "apikey": API_KEY,
-    }
-    url = "https://www.alphavantage.co/query?" + urllib.parse.urlencode(params)
-    data = http_get_json(url)
-
-    # Handle plan / throttling payloads
+def check_common_errors(data: dict):
     if "Note" in data:
-        raise RuntimeError(f"Rate limited: {data['Note']}")
+        raise RuntimeError("Rate limited (Note).")
     if "Information" in data:
         raise RuntimeError(f"Information: {data['Information']}")
     if "Error Message" in data:
         raise RuntimeError(f"API error: {data['Error Message']}")
 
-    ts_key = f"Time Series ({INTERVAL})"
-    series = data.get(ts_key)
-    if not series or not isinstance(series, dict):
-        raise RuntimeError("No intraday series returned (symbol unsupported or empty)")
+def fetch_global_quote(av_symbol: str):
+    data = http_get_json({
+        "function": "GLOBAL_QUOTE",
+        "symbol": av_symbol,
+        "apikey": API_KEY,
+    })
+    check_common_errors(data)
+    q = data.get("Global Quote") or {}
+    px = q.get("05. price")
+    day = q.get("07. latest trading day") or ""
+    if not px:
+        raise RuntimeError("GLOBAL_QUOTE empty")
+    price = float(px)
+    if price <= 0:
+        raise RuntimeError("GLOBAL_QUOTE bad price")
+    return price, day
 
-    # latest timestamp key in the dict
+def fetch_intraday_close(av_symbol: str):
+    data = http_get_json({
+        "function": "TIME_SERIES_INTRADAY",
+        "symbol": av_symbol,
+        "interval": INTRADAY_INTERVAL,
+        "outputsize": "compact",
+        "apikey": API_KEY,
+    })
+    check_common_errors(data)
+    key = f"Time Series ({INTRADAY_INTERVAL})"
+    series = data.get(key)
+    if not series or not isinstance(series, dict):
+        raise RuntimeError("INTRADAY empty/unsupported")
     latest_ts = sorted(series.keys())[-1]
     bar = series[latest_ts]
-    last = float(bar["4. close"])
-    if last <= 0:
-        raise RuntimeError("Bad close price")
-    return last, latest_ts
+    price = float(bar["4. close"])
+    if price <= 0:
+        raise RuntimeError("INTRADAY bad close")
+    return price, latest_ts
+
+def fetch_best_effort(av_symbol: str):
+    # Try GLOBAL_QUOTE, then fallback to INTRADAY
+    try:
+        return fetch_global_quote(av_symbol)
+    except Exception:
+        return fetch_intraday_close(av_symbol)
 
 def main():
     out = {
@@ -69,27 +86,25 @@ def main():
         "errors": {},
     }
 
-    # best-effort: fill what we can, never crash the whole run
-    last_ts_seen = ""
+    last_stamp = ""
 
     items = list(SYMBOLS.items())
     for i, (internal, avsym) in enumerate(items):
         try:
-            px, last_ts = fetch_latest_intraday(avsym)
-            out["prices"][internal] = px
-            if last_ts and last_ts > last_ts_seen:
-                last_ts_seen = last_ts
+            price, stamp = fetch_best_effort(avsym)
+            out["prices"][internal] = price
+            if stamp and stamp > last_stamp:
+                last_stamp = stamp
         except Exception as e:
             out["errors"][internal] = str(e)
 
-        # Free tier is tight. Slow it down.
+        # Free tier: be conservative
         if i < len(items) - 1:
             time.sleep(15)
 
-    # AlphaVantage intraday timestamps are local-exchange time; still useful as "last update"
-    out["last_trading_day"] = last_ts_seen or "—"
+    out["last_trading_day"] = last_stamp or "—"
 
-    os.makedirs("data", exist_ok=True)
+    # Always write file (even if errors)
     with open("data/quotes.json", "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
 
