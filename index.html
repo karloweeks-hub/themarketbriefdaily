@@ -10,19 +10,18 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#content">Skip to content</a>
 
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/" aria-label="The Market Brief Daily Home">
+      <a class="brand" href="/">
         <img class="brand-logo" src="/assets/images/logo.png" alt="MarketBriefDaily logo" />
-        <span class="brand-stack">
-          <span class="brand-title">The Market Brief Daily</span>
-          <span class="brand-sub">Market structure • Physical supply • Macro transmission</span>
-        </span>
+        <div>
+          <div class="brand-name">The Market Brief Daily</div>
+          <div class="brand-sub">Market structure • Physical supply • Macro transmission</div>
+        </div>
       </a>
 
-      <nav class="nav" aria-label="Primary">
+      <nav class="nav">
         <a class="is-active" href="/">Home</a>
         <a href="/posts.html">Posts</a>
         <a href="/investments.html">Investments</a>
@@ -32,118 +31,101 @@
     </div>
   </header>
 
-  <section class="hero" aria-label="Hero">
+  <!-- HERO -->
+  <section class="hero">
     <div class="container hero-inner">
-      <div class="hero-card">
-        <div class="badge">Independent research • Mechanics-first • Risk-aware</div>
-        <h1>MarketBriefDaily</h1>
+      <div class="hero-copy">
+        <div class="hero-eyebrow">Independent research</div>
+        <h1>Professional market intelligence for metals and macro</h1>
         <p>
-          Professional market analysis focused on the mechanics behind price: inventory buffers, delivery windows,
-          funding/lease regimes, positioning pressure, and macro transmission across rates, FX, and commodities.
+          We focus on the mechanics behind price formation: inventory buffers, delivery windows,
+          funding and lease regimes, positioning pressure, and transmission channels across rates,
+          FX, and commodities.
         </p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="/posts.html">Read latest</a>
-          <a class="btn" href="/investments.html">Watchlist</a>
-          <a class="btn" href="/about.html">Method</a>
-        </div>
-
-        <div class="small" style="margin-top:10px;">
-          For informational purposes only. Not investment advice. See <a href="/disclaimer.html">disclaimer</a>.
+          <a class="btn primary" href="/posts.html">Read latest research</a>
+          <a class="btn" href="/investments.html">View watchlist</a>
+          <a class="btn" href="/about.html">Our method</a>
         </div>
       </div>
     </div>
   </section>
 
-  <main id="content" class="section">
-    <div class="container">
-      <div class="grid">
+  <!-- CONTENT -->
+  <main class="section">
+    <div class="container grid">
 
-        <section class="card" aria-label="Latest">
-          <div class="kicker">Latest</div>
-          <h2>Recent research</h2>
-          <p>Featured report. Browse the full archive on the Posts page.</p>
+      <!-- Latest -->
+      <section>
+        <div class="kicker">Latest</div>
+        <h2>Recent research</h2>
+        <p class="lead">Featured report. Full archive available in Posts.</p>
 
-          <div class="post-list">
-            <article class="post-item">
-              <div class="post-meta">
-                <span class="tag">Metals</span>
-                <time datetime="2026-02-07">Feb 07, 2026</time>
-              </div>
-              <a class="post-title" href="/posts/2026-02-07-silver-market-outlook-comex-inventory.html">
-                Silver Market Outlook: Physical Tightness, COMEX Inventory, and What Investors Should Watch
-              </a>
-              <p class="post-excerpt">
-                Registered vs eligible inventory, delivery windows, and lease-rate signals—why volatility risk rises when buffers thin.
-              </p>
-            </article>
-          </div>
-
-          <div style="margin-top:12px;">
-            <a class="btn btn-primary" href="/posts.html">Browse posts</a>
-          </div>
-        </section>
-
-        <section class="card" aria-label="Method">
-          <div class="kicker">Method</div>
-          <h2>How we think</h2>
-          <p>Clear mechanics, conservative claims, and a practical “what to watch” list.</p>
-
-          <div class="post-list">
-            <div class="post-item">
-              <div class="post-meta">
-                <span class="tag tag-blue">Market structure</span>
-                <span>Mechanics</span>
-              </div>
-              <p class="post-excerpt" style="margin:0;">
-                Delivery windows, exchange inventories, futures-physical linkage, settlement incentives, and positioning pressure.
-              </p>
+        <div class="block">
+          <article class="post">
+            <div class="post-meta">
+              <span>Metals</span>
+              <time datetime="2026-02-07">Feb 07, 2026</time>
             </div>
+            <a class="post-title" href="/posts/2026-02-07-silver-market-outlook-comex-inventory.html">
+              Silver Market Outlook: Physical Tightness, COMEX Inventory, and What Investors Should Watch
+            </a>
+            <p class="post-excerpt">
+              Registered vs eligible inventory, delivery windows, and lease-rate signals—why volatility risk rises when buffers thin.
+            </p>
+          </article>
+        </div>
+      </section>
 
-            <div class="post-item">
-              <div class="post-meta">
-                <span class="tag">Physical tightness</span>
-                <span>Supply</span>
-              </div>
-              <p class="post-excerpt" style="margin:0;">
-                Lease/funding regimes, availability constraints, and the conditions where physical and paper diverge.
-              </p>
-            </div>
+      <!-- Method -->
+      <section>
+        <div class="kicker">Method</div>
+        <h2>How we think</h2>
+        <p class="lead">
+          Clear mechanics, conservative claims, and a practical “what to watch” list.
+        </p>
 
-            <div class="post-item">
-              <div class="post-meta">
-                <span class="tag tag-blue">Macro transmission</span>
-                <span>Rates → FX → Commodities</span>
-              </div>
-              <p class="post-excerpt" style="margin:0;">
-                How macro variables propagate into risk assets—what matters, what’s noise, and what to watch next.
-              </p>
-            </div>
+        <div class="block">
+          <div class="post">
+            <div class="post-title">Market structure</div>
+            <p class="post-excerpt">
+              Delivery windows, exchange inventories, futures-physical linkage, settlement incentives,
+              and positioning pressure.
+            </p>
           </div>
 
-          <div class="note" style="margin-top:12px;">
-            <strong>Disclosure:</strong>
-            <span class="small"> Informational only; not investment advice.</span>
+          <div class="post">
+            <div class="post-title">Physical tightness</div>
+            <p class="post-excerpt">
+              Lease and funding regimes, availability constraints, and divergence between paper and physical markets.
+            </p>
           </div>
-        </section>
 
-      </div>
+          <div class="post">
+            <div class="post-title">Macro transmission</div>
+            <p class="post-excerpt">
+              How rates, FX, and liquidity propagate into commodity and risk-asset pricing.
+            </p>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>
-        <div class="footer-brand">The Market Brief Daily</div>
-        <div class="small">Market structure & physical supply analysis.</div>
-      </div>
-      <div class="footer-right">
+      <div class="footer-brand">The Market Brief Daily</div>
+      <div class="footer-links">
         <a href="/posts.html">Posts</a>
         <a href="/investments.html">Investments</a>
+        <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
         <a href="/disclaimer.html">Disclaimer</a>
       </div>
     </div>
   </footer>
+
 </body>
 </html>
