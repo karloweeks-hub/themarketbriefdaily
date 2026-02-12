@@ -4,103 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Posts | The Market Brief Daily</title>
-  <meta name="description" content="Newsroom-style archive of Market Brief Daily research." />
+  <meta name="description" content="Research and macro analysis from The Market Brief Daily." />
   <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="/assets/style.css" />
-  <style>
-    /* Newsroom grid (scoped to this page) */
-    .newsroom {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-      margin-top: 22px;
-    }
-    .card {
-      grid-column: span 6;
-      background: #fff;
-      border: 1px solid rgba(15,23,42,.10);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 22px rgba(15,23,42,.06);
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(15,23,42,.10);
-      border-color: rgba(15,23,42,.16);
-    }
-    .card a { text-decoration: none; color: inherit; display:block; }
-    .thumb {
-      position: relative;
-      aspect-ratio: 16/9;
-      background: #0b1220;
-    }
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display:block;
-      filter: saturate(1.05) contrast(1.02);
-    }
-    .thumb:after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0) 55%);
-      pointer-events:none;
-    }
-    .tag {
-      position:absolute;
-      left: 12px; top: 12px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(15,23,42,.14);
-      color: rgba(15,23,42,.9);
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
-    .card-body { padding: 14px 16px 16px; }
-    .meta {
-      display:flex; justify-content:space-between; gap:12px;
-      color: rgba(15,23,42,.62);
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-    .headline {
-      font-size: 18px;
-      line-height: 1.22;
-      letter-spacing: -.01em;
-      margin: 0 0 8px;
-      color: rgba(15,23,42,.96);
-      font-weight: 750;
-    }
-    .dek {
-      margin:0;
-      color: rgba(15,23,42,.72);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    /* Featured row */
-    .featured {
-      grid-column: span 12;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-      margin-bottom: 8px;
-    }
-    .featured .card { grid-column: span 12; display:grid; grid-template-columns: 1.2fr .8fr; }
-    .featured .thumb { aspect-ratio: auto; min-height: 320px; }
-    .featured .card-body { padding: 18px 18px 18px; }
-    .featured .headline { font-size: 26px; }
-
-    @media (max-width: 860px){
-      .card { grid-column: span 12; }
-      .featured .card { grid-template-columns: 1fr; }
-      .featured .thumb { min-height: 220px; }
-      .featured .headline { font-size: 22px; }
-    }
-  </style>
 </head>
 
 <body>
@@ -128,59 +34,83 @@
 
   <main id="content" class="page">
     <div class="container">
+
       <header class="page-header">
-        <div class="page-kicker">Posts</div>
-        <h1 class="page-title">Newsroom</h1>
+        <div class="page-kicker">Newsroom</div>
+        <h1 class="page-title">Research & Analysis</h1>
         <p class="page-lead">
-          Research notes across metals and macro. Click a story to read the full article.
+          Macro, metals, and market-structure analysis. Clear mechanics, conservative claims, and risk-aware framing.
         </p>
       </header>
 
-      <section class="newsroom" aria-label="Posts grid">
-        <!-- FEATURED -->
-        <div class="featured">
-          <div class="card">
-            <a href="/posts/2026-02-11-japan-pm-us-stocks.html">
-              <div class="thumb">
-                <span class="tag">Macro</span>
-                <img src="/assets/images/posts/japan-pm-us-stocks.jpg" alt="Japan PM and U.S. stocks cover">
-              </div>
-              <div class="card-body">
-                <div class="meta">
-                  <span>Feb 11, 2026</span>
-                  <span>Market Brief Daily</span>
-                </div>
-                <h2 class="headline">What Japan’s New Prime Minister Means for U.S. Stocks</h2>
-                <p class="dek">A macro and market breakdown: rates, FX, flows, and what to watch next.</p>
-              </div>
-            </a>
-          </div>
-        </div>
+      <section class="newsroom-grid">
 
-        <!-- EXISTING POST (Silver) -->
-        <div class="card">
+        <!-- Post 1: Silver Market Outlook -->
+        <article class="card">
           <a href="/posts/2026-02-07-silver-market-outlook.html">
             <div class="thumb">
               <span class="tag">Metals</span>
-              <img src="/assets/images/posts/silver-outlook.jpg" alt="Silver market outlook cover">
+              <img src="/assets/images/posts/silver-outlook.jpg" alt="Silver market outlook cover image">
             </div>
             <div class="card-body">
               <div class="meta">
                 <span>Feb 07, 2026</span>
                 <span>Metals</span>
               </div>
-              <h2 class="headline">Silver Market Outlook: Physical Tightness, COMEX Inventory, and What Investors Should Watch</h2>
-              <p class="dek">Registered vs eligible inventory, delivery windows, and lease-rate signals—why volatility risk rises when buffers thin.</p>
+              <h2 class="headline">
+                Silver Market Outlook: Physical Tightness, COMEX Inventory, and What Investors Should Watch
+              </h2>
+              <p class="dek">
+                Registered vs eligible inventory, delivery windows, and lease-rate signals — why volatility risk rises when buffers thin.
+              </p>
             </div>
           </a>
-        </div>
+        </article>
 
-        <!-- Add future posts by duplicating a .card block -->
+        <!-- Post 2: Japan PM Macro Breakdown -->
+        <article class="card">
+          <a href="/posts/2026-02-12-japan-pm-us-stocks.html">
+            <div class="thumb">
+              <span class="tag">Macro</span>
+              <img src="/assets/images/posts/japan-pm-us-stocks.jpg" alt="Japan PM macro impact cover image">
+            </div>
+            <div class="card-body">
+              <div class="meta">
+                <span>Feb 12, 2026</span>
+                <span>Macro</span>
+              </div>
+              <h2 class="headline">
+                What Japan’s New Prime Minister Means for U.S. Stocks
+              </h2>
+              <p class="dek">
+                Carry trade unwind risk, capital flow mechanics, reserve dynamics, and transmission into U.S. equities and bonds.
+              </p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Placeholder for future posts -->
+        <!--
+        <article class="card">
+          <a href="/posts/YYYY-MM-DD-title.html">
+            <div class="thumb">
+              <span class="tag">Macro</span>
+              <img src="/assets/images/posts/your-image.jpg" alt="Cover image">
+            </div>
+            <div class="card-body">
+              <div class="meta">
+                <span>Mar 01, 2026</span>
+                <span>Macro</span>
+              </div>
+              <h2 class="headline">Your Next Headline</h2>
+              <p class="dek">Short summary for the newsroom card.</p>
+            </div>
+          </a>
+        </article>
+        -->
+
       </section>
 
-      <div class="note" style="margin-top:20px;">
-        <b>Tip:</b> Keep URLs consistent: <code>/posts/YYYY-MM-DD-title.html</code>.
-      </div>
     </div>
   </main>
 
