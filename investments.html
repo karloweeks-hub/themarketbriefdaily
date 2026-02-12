@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Investments | The Market Brief Daily</title>
-  <meta name="description" content="Model portfolio dashboard (static-site) with automated pricing updates." />
+  <meta name="description" content="Watchlist and research list with a model portfolio tracker." />
   <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
@@ -38,22 +38,24 @@
         <div class="page-kicker">Investments</div>
         <h1 class="page-title">Watchlist + model portfolio</h1>
         <p class="page-lead">
-          Informational only — not investment advice. See <a href="/disclaimer.html">disclaimer</a>.
+          A structured research list with a model portfolio tracker. Informational only — not investment advice.
+          See <a href="/disclaimer.html">disclaimer</a>.
         </p>
       </header>
 
-      <!-- Portfolio summary + P&L -->
+      <!-- Portfolio-style summary box at top -->
       <section class="portfolio" aria-label="Portfolio summary">
         <div class="portfolio-top">
           <div>
-            <div class="p-title">Model Portfolio (Automated)</div>
+            <div class="p-title">Model Portfolio (Entry day: 2026-02-11 open)</div>
             <div class="p-sub">
-              Model capital: <b>$100,000</b>. Entry prices are the <b>market open on 2026-02-11</b>. Current prices update via <code>data/prices.json</code>.
+              Starts with <b>$100,000</b> USD. Entry prices are hardcoded to market open on <b>2026-02-11</b>.
+              Update <b>Current Price</b> manually (or later via an automated feed).
             </div>
-            <div class="p-sub">Price feed last updated: <b id="priceAsOf">—</b></div>
           </div>
           <div class="p-actions">
-            <button class="p-btn" id="btnRefresh" type="button">Refresh prices</button>
+            <button class="p-btn" id="btnReset">Reset to default</button>
+            <button class="p-btn" id="btnClearCurrent">Clear current prices</button>
           </div>
         </div>
 
@@ -61,12 +63,12 @@
           <div class="kpi">
             <div class="label">Net liquidation</div>
             <div class="value" id="kpiNet">$—</div>
-            <div class="sub" id="kpiNetSub">Cost basis until priced</div>
+            <div class="sub" id="kpiNetSub">Cash + holdings value</div>
           </div>
           <div class="kpi">
             <div class="label">Total P&L</div>
             <div class="value" id="kpiPnL">$—</div>
-            <div class="sub" id="kpiPnLSub">Since 2026-02-11 open</div>
+            <div class="sub" id="kpiPnLSub">Based on entry vs current</div>
           </div>
           <div class="kpi">
             <div class="label">Cash</div>
@@ -81,7 +83,8 @@
         </div>
 
         <div class="note" style="margin-top:14px;">
-          <b>Mechanics:</b> Shares are sized off entry open. If a live price is missing, the position is valued at cost (allocation).
+          <b>How it works:</b> Shares are sized from <b>allocation ÷ entry price</b>.  
+          P&L updates when you enter a <b>current price</b>. Everything saves automatically in your browser.
         </div>
 
         <div style="height:14px;"></div>
@@ -93,8 +96,8 @@
                 <th>Stock</th>
                 <th>Risk</th>
                 <th>Allocation</th>
-                <th>Entry (Open)</th>
-                <th>Current</th>
+                <th>Entry (2026-02-11 Open)</th>
+                <th>Current Price</th>
                 <th>Shares</th>
                 <th>Market Value</th>
                 <th>P&L</th>
@@ -243,6 +246,7 @@
             </div>
           </div>
         </aside>
+
       </div>
     </div>
   </main>
@@ -261,109 +265,153 @@
     </div>
   </footer>
 
+  <!-- Portfolio engine (client-side only) -->
   <script>
-    // Fixed allocations (total = $100,000)
-    const HOLDINGS = [
-      { name:"Alamos Gold",        ticker:"AGI",  risk:"Lower",  allocation: 28000 },
-      { name:"Fortuna Mining",     ticker:"FSM",  risk:"Lower",  allocation: 22000 },
-      { name:"Galiano Gold",       ticker:"GAU",  risk:"Medium", allocation: 18000 },
-      { name:"Newfound Gold",      ticker:"NFGC", risk:"Higher", allocation: 12000 },
-      { name:"Vista Gold",         ticker:"VGZ",  risk:"Higher", allocation:  8000 },
-      { name:"New Pacific Metals", ticker:"NEWP", risk:"Higher", allocation: 12000 }
-    ];
+    const STORAGE_KEY = "mbd_portfolio_v2";
 
-    const STARTING_CASH = 100000;
+    // HARD-CODED ENTRY PRICES = 2026-02-11 market open
+    // Sources:
+    // AGI 62.50, FSM 15.43, GAU 3.07, VGZ 3.04 from Investing.com
+    // NFGC 3.07 from StockAnalysis
+    // NEWP 3.92 from Yahoo Finance history snippet
+    const DEFAULT_PORTFOLIO = {
+      baseCurrency: "USD",
+      startingCash: 100000,
+      entryDate: "2026-02-11",
+      holdings: [
+        { name:"Alamos Gold",        ticker:"AGI",  risk:"Lower",  allocation: 28000, entry: "62.50", current: "" },
+        { name:"Fortuna Mining",     ticker:"FSM",  risk:"Lower",  allocation: 22000, entry: "15.43", current: "" },
+        { name:"Galiano Gold",       ticker:"GAU",  risk:"Medium", allocation: 18000, entry: "3.07",  current: "" },
+        { name:"Newfound Gold",      ticker:"NFGC", risk:"Higher", allocation: 12000, entry: "3.07",  current: "" },
+        { name:"Vista Gold",         ticker:"VGZ",  risk:"Higher", allocation:  8000, entry: "3.04",  current: "" },
+        { name:"New Pacific Metals", ticker:"NEWP", risk:"Higher", allocation: 12000, entry: "3.92",  current: "" },
+      ]
+    };
 
     function money0(n){
+      if (n === null || n === undefined || Number.isNaN(n)) return "—";
       return n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
     }
     function money2(n){
+      if (n === null || n === undefined || Number.isNaN(n)) return "—";
       return n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:2});
     }
     function pct(n){
+      if (n === null || n === undefined || Number.isNaN(n)) return "—";
       return (n*100).toFixed(2) + "%";
     }
-    function fmtTime(iso){
-      if (!iso) return "—";
-      try { return new Date(iso).toLocaleString(); } catch { return iso; }
+
+    function clone(x){ return JSON.parse(JSON.stringify(x)); }
+
+    function loadPortfolio(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return clone(DEFAULT_PORTFOLIO);
+      try { return JSON.parse(raw); }
+      catch { return clone(DEFAULT_PORTFOLIO); }
+    }
+    function savePortfolio(p){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
     }
 
-    async function loadPrices(){
-      const res = await fetch("/data/prices.json", { cache: "no-store" });
-      if (!res.ok) throw new Error("prices.json not found");
-      return res.json();
+    function calcRow(h){
+      const entry = parseFloat(h.entry);
+      const current = parseFloat(h.current);
+
+      let shares = null;
+      if (!Number.isNaN(entry) && entry > 0) shares = h.allocation / entry;
+
+      let mkt = null, pnl = null, pnlPct = null;
+      if (shares !== null && !Number.isNaN(current) && current > 0){
+        mkt = shares * current;
+        pnl = mkt - h.allocation;
+        pnlPct = pnl / h.allocation;
+      } else {
+        // If current missing, value at cost for clean behavior
+        mkt = h.allocation;
+        pnl = 0;
+        pnlPct = 0;
+      }
+
+      return { entry, current, shares, mkt, pnl, pnlPct };
     }
 
-    function render(prices){
+    function render(){
+      const p = loadPortfolio();
       const body = document.getElementById("holdingsBody");
       body.innerHTML = "";
 
       let invested = 0;
-      let marketValueTotal = 0;
+      let mktTotal = 0;
       let pnlTotal = 0;
 
-      for (const h of HOLDINGS){
+      p.holdings.forEach((h, idx) => {
         invested += h.allocation;
 
-        const q = prices?.quotes?.[h.ticker];
-        const entryOpen = q?.entryOpen ?? null;
-        const last = q?.last ?? null;
-
-        // Shares only if we have entryOpen
-        const shares = (entryOpen && entryOpen > 0) ? (h.allocation / entryOpen) : null;
-
-        // If last is missing, value at cost (allocation) so the portfolio starts at 100k.
-        const marketValue = (shares !== null && last && last > 0) ? (shares * last) : h.allocation;
-
-        const pnl = marketValue - h.allocation;
-        const pnlPct = pnl / h.allocation;
-
-        marketValueTotal += marketValue;
-        pnlTotal += pnl;
+        const r = calcRow(h);
+        mktTotal += r.mkt ?? 0;
+        pnlTotal += r.pnl ?? 0;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td><div><b>${h.name}</b> <small>(${h.ticker})</small></div></td>
+          <td>
+            <div><b>${h.name}</b> <small>(${h.ticker})</small></div>
+          </td>
           <td>${h.risk}</td>
           <td>${money0(h.allocation)}</td>
-          <td>${entryOpen ? money2(entryOpen) : "—"}</td>
-          <td>${last ? money2(last) : "—"}</td>
-          <td>${shares === null ? "—" : shares.toFixed(4)}</td>
-          <td>${money2(marketValue)}</td>
-          <td class="${pnl >= 0 ? "pos" : "neg"}">${money2(pnl)}</td>
-          <td class="${pnlPct >= 0 ? "pos" : "neg"}">${pct(pnlPct)}</td>
+          <td>${Number.isNaN(r.entry) ? "—" : r.entry.toFixed(2)}</td>
+          <td>
+            <input class="p-in" inputmode="decimal" placeholder="type current" value="${h.current}"
+              data-idx="${idx}" data-field="current" aria-label="Current price for ${h.ticker}">
+          </td>
+          <td>${r.shares === null ? "—" : r.shares.toFixed(4)}</td>
+          <td>${r.mkt === null ? "—" : money2(r.mkt)}</td>
+          <td class="${r.pnl === null ? "" : (r.pnl >= 0 ? "pos" : "neg")}">${r.pnl === null ? "—" : money2(r.pnl)}</td>
+          <td class="${r.pnlPct === null ? "" : (r.pnlPct >= 0 ? "pos" : "neg")}">${r.pnlPct === null ? "—" : pct(r.pnlPct)}</td>
         `;
         body.appendChild(tr);
-      }
+      });
 
-      const cash = Math.max(0, STARTING_CASH - invested);
-      const net = cash + marketValueTotal;
+      const cash = Math.max(0, p.startingCash - invested);
+      const net = cash + mktTotal;
 
       document.getElementById("kpiCash").textContent = money0(cash);
-      document.getElementById("kpiExposure").textContent = money2(marketValueTotal);
+      document.getElementById("kpiExposure").textContent = money2(mktTotal);
       document.getElementById("kpiNet").textContent = money2(net);
       document.getElementById("kpiPnL").textContent = money2(pnlTotal);
 
-      document.getElementById("kpiNetSub").textContent = "Cash + holdings (cost until priced)";
-      document.getElementById("kpiPnLSub").textContent = "Since entry open (2026-02-11)";
+      document.getElementById("kpiPnLSub").textContent = "Since entry open (" + p.entryDate + ")";
+      document.getElementById("kpiNetSub").textContent = "Cash + market value";
     }
 
-    async function refresh(){
-      try{
-        const prices = await loadPrices();
-        document.getElementById("priceAsOf").textContent = fmtTime(prices.asOf);
-        render(prices);
-      }catch(e){
-        // Render with no prices but still show cost basis
-        document.getElementById("priceAsOf").textContent = "—";
-        render({ quotes: {} });
-      }
+    function wire(){
+      document.addEventListener("input", (e) => {
+        const t = e.target;
+        if (!t.classList.contains("p-in")) return;
+
+        const idx = parseInt(t.getAttribute("data-idx"), 10);
+        const field = t.getAttribute("data-field");
+
+        const p = loadPortfolio();
+        p.holdings[idx][field] = t.value;
+        savePortfolio(p);
+        render();
+      });
+
+      document.getElementById("btnReset").addEventListener("click", () => {
+        savePortfolio(clone(DEFAULT_PORTFOLIO));
+        render();
+      });
+
+      document.getElementById("btnClearCurrent").addEventListener("click", () => {
+        const p = loadPortfolio();
+        p.holdings = p.holdings.map(h => ({...h, current:""}));
+        savePortfolio(p);
+        render();
+      });
     }
 
-    document.getElementById("btnRefresh").addEventListener("click", refresh);
-
-    refresh();
-    setInterval(refresh, 60 * 60 * 1000);
+    wire();
+    render();
   </script>
 </body>
 </html>
