@@ -1,4 +1,4 @@
-name: Update intraday quotes
+name: Update quotes.json
 
 on:
   workflow_dispatch:
@@ -24,9 +24,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Fetch quotes
-        env:
-          ALPHAVANTAGE_KEY: ${{ secrets.ALPHAVANTAGE_KEY }}
+      - name: Fetch quotes (Alpha Vantage)
         run: |
           python scripts/fetch_quotes.py
 
