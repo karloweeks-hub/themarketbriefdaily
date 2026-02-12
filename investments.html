@@ -32,30 +32,50 @@ a:hover{ text-decoration: underline; text-underline-offset: 3px; }
 .container{ width: min(var(--max), calc(100% - 56px)); margin: 0 auto; }
 
 .site-header{
-  position: sticky; top: 0; z-index: 50;
+  position: sticky;
+  top: 0;
+  z-index: 50;
   background: rgba(255,255,255,.92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
 .header-inner{
-  display:flex; align-items:center; justify-content:space-between;
-  padding: 16px 0; gap: 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 16px 0;
+  gap: 24px;
 }
 .brand{ display:flex; flex-direction:column; gap:2px; }
 .brand-title{ font-weight: 850; letter-spacing: -.2px; line-height: 1.1; }
 .brand-sub{ font-size: 13px; color: var(--muted2); }
-.nav{ display:flex; gap: 18px; align-items:center; flex-wrap:wrap; }
+
+.nav{
+  display:flex;
+  gap: 18px;
+  align-items:center;
+  flex-wrap:wrap;
+}
 .nav a{
-  color: var(--ink); font-weight: 650; font-size: 14px;
-  padding: 10px 2px 8px; border-bottom: 2px solid transparent;
+  color: var(--ink);
+  font-weight: 650;
+  font-size: 14px;
+  padding: 10px 2px 8px;
+  border-bottom: 2px solid transparent;
 }
 .nav a:hover{ border-bottom-color: rgba(11,18,32,.18); text-decoration:none; }
 .nav a.is-active{ border-bottom-color: var(--ink); }
 
 .section{ padding: 30px 0 44px; }
-.kicker{ font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
-h1{ margin: 0 0 6px; font-size: 34px; letter-spacing: -.3px; }
-.lead{ margin: 0 0 18px; color: var(--muted); max-width: 80ch; }
+.kicker{
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 10px;
+}
+h1{ margin:0 0 6px; font-size: 34px; letter-spacing: -.3px; }
+.lead{ margin:0 0 18px; color: var(--muted); max-width: 90ch; }
 
 .portfolio{
   border: 1px solid var(--line);
@@ -65,17 +85,32 @@ h1{ margin: 0 0 6px; font-size: 34px; letter-spacing: -.3px; }
   box-shadow: var(--shadow);
 }
 .portfolio-top{
-  display:flex; justify-content:space-between; gap: 16px;
-  align-items:flex-start; flex-wrap: wrap;
+  display:flex;
+  justify-content:space-between;
+  gap: 16px;
+  align-items:flex-start;
+  flex-wrap: wrap;
 }
 .p-title{ font-weight: 850; letter-spacing: -.2px; }
 .p-sub{ color: var(--muted2); font-size: 13px; margin-top: 4px; }
-.p-actions{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+.p-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
 .p-btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding: 10px 12px; border-radius: 12px;
-  border: 1px solid var(--line); background: #fff;
-  color: var(--ink); font-weight: 750; cursor: pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 750;
+  cursor: pointer;
 }
 .p-btn:hover{ background: rgba(11,18,32,.03); }
 
@@ -103,7 +138,11 @@ h1{ margin: 0 0 6px; font-size: 34px; letter-spacing: -.3px; }
   margin-top: 6px;
   font-size: 18px;
 }
-.kpi .sub{ margin-top: 4px; color: var(--muted); font-size: 13px; }
+.kpi .sub{
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
 
 .table-wrap{
   overflow:auto;
@@ -114,7 +153,7 @@ h1{ margin: 0 0 6px; font-size: 34px; letter-spacing: -.3px; }
 table{
   width: 100%;
   border-collapse: collapse;
-  min-width: 1080px;
+  min-width: 1180px;
   background:#fff;
 }
 th, td{
@@ -130,7 +169,7 @@ th{
   text-transform: uppercase;
   color: var(--muted2);
   background: #fff;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 td small{ color: var(--muted2); }
 
@@ -158,13 +197,6 @@ summary{ cursor:pointer; font-weight: 850; }
   font-size:12px;
   color: var(--muted);
 }
-.note{
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
-  color: var(--muted);
-}
 
 .chartbox{
   border: 1px solid var(--line);
@@ -173,6 +205,14 @@ summary{ cursor:pointer; font-weight: 850; }
   margin-top: 14px;
 }
 canvas{ width:100%; height:260px; display:block; }
+
+.note{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
 
 @media (max-width: 900px){
   .container{ width: min(var(--max), calc(100% - 34px)); }
@@ -202,21 +242,23 @@ canvas{ width:100%; height:260px; display:block; }
   <div class="kicker">Public model portfolio</div>
   <h1>Investments</h1>
   <p class="lead">
-    A small-allocation, high-cash portfolio designed for optionality. Prices update automatically (end-of-day close).
-    Theses are shown per position.
+    Intraday marks are fetched from Alpha Vantage. Due to free-tier rate limits, quotes are refreshed sequentially.
+    “Performance since inception” uses cached daily data (refresh manually).
   </p>
 
-  <section class="portfolio" aria-labelledby="port-title">
+  <section class="portfolio">
     <div class="portfolio-top">
       <div>
-        <div id="port-title" class="p-title">Portfolio Overview</div>
+        <div class="p-title">Portfolio Overview</div>
         <div class="p-sub">
-          As of <span id="asof" class="mono">—</span> · Data source: Stooq (daily close) ·
-          Last refresh: <span id="refreshed" class="mono">—</span>
+          As of <span id="asof" class="mono">—</span> ·
+          Quote status: <span id="quoteStatus" class="mono">—</span> ·
+          Last price timestamp: <span id="lastTS" class="mono">—</span>
         </div>
       </div>
       <div class="p-actions">
-        <button class="p-btn" id="refreshBtn">Refresh prices</button>
+        <button class="p-btn" id="refreshQuotesBtn">Refresh intraday prices</button>
+        <button class="p-btn" id="refreshHistoryBtn">Refresh history (slow)</button>
         <button class="p-btn" id="toggleThesisBtn">Expand all theses</button>
       </div>
     </div>
@@ -225,30 +267,30 @@ canvas{ width:100%; height:260px; display:block; }
       <div class="kpi">
         <div class="label">Total Capital</div>
         <div class="value mono" id="totalCap">$100,000</div>
-        <div class="sub">Initial model capital.</div>
+        <div class="sub">Model capital.</div>
       </div>
       <div class="kpi">
-        <div class="label">Portfolio Value</div>
-        <div class="value mono" id="portValue">—</div>
+        <div class="label">Portfolio Value (NAV)</div>
+        <div class="value mono" id="nav">—</div>
         <div class="sub">Invested + cash.</div>
       </div>
       <div class="kpi">
         <div class="label">P/L</div>
-        <div class="value mono" id="portPL">—</div>
+        <div class="value mono" id="pl">—</div>
         <div class="sub">Mark-to-market vs cost basis.</div>
       </div>
       <div class="kpi">
         <div class="label">Since Inception</div>
-        <div class="value mono" id="sinceInception">—</div>
+        <div class="value mono" id="si">—</div>
         <div class="sub">Return since inception date.</div>
       </div>
     </div>
 
     <div class="chartbox">
-      <div class="kicker" style="margin:0 0 8px;">Performance since inception</div>
-      <canvas id="navChart" width="1200" height="320" aria-label="NAV chart"></canvas>
-      <div class="note">
-        NAV is computed using fixed shares (set at inception) and daily closes. This is a model tear-sheet, not real-time pricing.
+      <div class="kicker" style="margin:0 0 8px;">Performance since inception (NAV)</div>
+      <canvas id="navChart" width="1200" height="320"></canvas>
+      <div class="note" id="chartNote">
+        History uses daily adjusted closes cached in your browser. Click “Refresh history” to rebuild (rate-limited).
       </div>
     </div>
 
@@ -276,24 +318,30 @@ canvas{ width:100%; height:260px; display:block; }
 
     <div class="note">
       <strong>Disclosure:</strong> informational model portfolio only; not investment advice.
-      Prices are fetched client-side and may be delayed or unavailable.
+      Intraday prices depend on Alpha Vantage availability and rate limits.
     </div>
   </section>
 </main>
 
 <script>
-/**
- * ======= CONFIG (edit these only) =======
- */
+/* =======================
+   CONFIG
+======================= */
 
-// Total cash available
+// You provided this key explicitly.
+const AV_KEY = "GUY8S89NSG15NVYH";
+
+// IMPORTANT: free-tier usually ~5 requests/min. We have 6 tickers.
+// This delay keeps us under the limit when refreshing all.
+const QUOTE_DELAY_MS = 14000; // 14s between quote calls (6 symbols ~70s)
+
+// Total capital
 const TOTAL_CAPITAL = 100000;
 
-// Inception date for performance (YYYY-MM-DD). Set this to your true start date.
+// Set your true inception date
 const INCEPTION_DATE = "2026-02-01";
 
-// Small allocations per stock (USD). Remaining stays as cash.
-// Tune these to whatever “very small allocation” means for you.
+// Small allocations per stock in USD (rest stays cash)
 const targetDollars = {
   AGI: 2000,
   FSM: 1500,
@@ -303,7 +351,7 @@ const targetDollars = {
   NEWP: 1000
 };
 
-// Your entry prices (provided)
+// Entry prices (you provided)
 const entry = {
   AGI: 42.855,
   FSM: 10.46,
@@ -313,18 +361,7 @@ const entry = {
   NEWP: 3.58
 };
 
-// Stooq symbols. Most US listings use ".us" (lowercase).
-// If one doesn’t resolve, adjust the suffix (e.g. ".ca") to match the exchange on Stooq.
-const stooqSymbol = {
-  AGI:  "agi.us",
-  FSM:  "fsm.us",
-  GAU:  "gau.us",
-  NFGC: "nfgc.us",
-  VGZ:  "vgz.us",
-  NEWP: "newp.us"
-};
-
-// Position metadata + theses
+// Metadata + theses
 const meta = {
   AGI: { name:"Alamos Gold", stage:"Producer",
     thesis:[
@@ -336,15 +373,15 @@ const meta = {
   },
   FSM: { name:"Fortuna Mining", stage:"Producer",
     thesis:[
-      "Gold/silver hybrid exposure with geographic diversification.",
+      "Gold/silver hybrid with geographic diversification.",
       "Satellite position; thesis improves with margin expansion as metals recover.",
-      "Sized small due to miner beta and jurisdiction dispersion."
+      "Sized small due to miner beta + jurisdiction dispersion."
     ],
     watch:["cost control","jurisdiction stability","balance sheet","metal sensitivity"]
   },
   GAU: { name:"Galiano Gold", stage:"Turnaround / Small Cap",
     thesis:[
-      "Turnaround/operational execution story in a smaller cap vehicle.",
+      "Turnaround/operational execution story; small-cap beta.",
       "Upside tied to resource/operational improvements; single-asset concentration risk.",
       "Sized small to reflect idiosyncratic risk."
     ],
@@ -376,76 +413,78 @@ const meta = {
   }
 };
 
-/**
- * ======= END CONFIG =======
- */
-
-// Derived fixed shares at inception based on target dollars and entry price
+// Tickers list
 const tickers = Object.keys(targetDollars);
+
+// Fixed shares based on entry and target dollars (institutional model sizing)
 const shares = Object.fromEntries(
   tickers.map(t => [t, targetDollars[t] / entry[t]])
 );
 
-const fmtUSD = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
-const fmtUSDCents = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:2});
+// Utilities
+const el = id => document.getElementById(id);
+const fmtUSD0 = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
+const fmtUSD2 = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:2});
 const fmtPct = n => (n>=0?"+":"") + n.toFixed(2) + "%";
 
-const el = id => document.getElementById(id);
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
-function csvParse(text){
-  const lines = text.trim().split(/\r?\n/);
-  const head = lines[0].split(",");
-  return lines.slice(1).map(line=>{
-    const cols = line.split(",");
-    const row = {};
-    head.forEach((h,i)=> row[h.trim()] = (cols[i] ?? "").trim());
-    return row;
-  });
+// Alpha Vantage: Global Quote (intraday-ish last price)
+async function fetchQuote(symbol){
+  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${encodeURIComponent(symbol)}&apikey=${encodeURIComponent(AV_KEY)}`;
+  const res = await fetch(url, {cache:"no-store"});
+  if(!res.ok) throw new Error(`Quote HTTP ${res.status} for ${symbol}`);
+  const data = await res.json();
+
+  // Rate-limit message looks like { "Note": "Thank you for using Alpha Vantage! Our standard API call frequency is ..." }
+  if(data.Note) throw new Error(`Rate limited: ${data.Note}`);
+  if(data["Error Message"]) throw new Error(`AV error: ${data["Error Message"]}`);
+
+  const q = data["Global Quote"];
+  if(!q || !q["05. price"]) throw new Error(`Bad quote payload for ${symbol}`);
+
+  const price = Number(q["05. price"]);
+  const ts = q["07. latest trading day"] || "";
+  const change = Number(q["09. change"] || "0");
+  const changePct = (q["10. change percent"] || "").replace("%","");
+
+  return { price, ts, change, changePct: Number(changePct) };
 }
 
-// Fetch latest daily close from Stooq (last row)
-async function fetchLatestClose(sym){
-  const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(sym)}&i=d`;
+// Alpha Vantage: Daily adjusted history (used for NAV chart)
+async function fetchDailyAdjusted(symbol){
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${encodeURIComponent(symbol)}&outputsize=full&apikey=${encodeURIComponent(AV_KEY)}`;
   const res = await fetch(url, {cache:"no-store"});
-  if(!res.ok) throw new Error(`Fetch failed for ${sym}: ${res.status}`);
-  const text = await res.text();
-  const rows = csvParse(text);
-  if(rows.length === 0) throw new Error(`No data for ${sym}`);
-  const last = rows[rows.length-1];
-  const close = Number(last.Close);
-  const date = last.Date;
-  if(!isFinite(close)) throw new Error(`Bad close for ${sym}`);
-  return {close, date};
-}
+  if(!res.ok) throw new Error(`Daily HTTP ${res.status} for ${symbol}`);
+  const data = await res.json();
+  if(data.Note) throw new Error(`Rate limited: ${data.Note}`);
+  if(data["Error Message"]) throw new Error(`AV error: ${data["Error Message"]}`);
 
-// Fetch history since inception for NAV chart
-async function fetchHistorySince(sym, sinceDate){
-  const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(sym)}&i=d`;
-  const res = await fetch(url, {cache:"no-store"});
-  if(!res.ok) throw new Error(`Fetch failed for ${sym}: ${res.status}`);
-  const text = await res.text();
-  const rows = csvParse(text)
-    .filter(r => r.Date >= sinceDate)
-    .map(r => ({date:r.Date, close:Number(r.Close)}))
-    .filter(r => isFinite(r.close));
-  return rows;
+  const ts = data["Time Series (Daily)"];
+  if(!ts) throw new Error(`No daily series for ${symbol}`);
+
+  // return array [{date, close}]
+  const out = Object.entries(ts)
+    .map(([date, v]) => ({ date, close: Number(v["5. adjusted close"] || v["4. close"]) }))
+    .filter(r => isFinite(r.close))
+    .sort((a,b)=> a.date.localeCompare(b.date));
+
+  return out;
 }
 
 function drawLineChart(canvas, series){
-  // series: [{date, nav}]
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // padding
   const padL = 54, padR = 18, padT = 16, padB = 34;
   const W = canvas.width, H = canvas.height;
   const plotW = W - padL - padR;
   const plotH = H - padT - padB;
 
-  if(series.length < 2){
+  if(!series || series.length < 2){
     ctx.fillStyle = "rgba(11,18,32,.65)";
     ctx.font = "14px system-ui";
-    ctx.fillText("Not enough history to render chart yet.", padL, padT+24);
+    ctx.fillText("History not loaded. Click “Refresh history (slow)”.", padL, padT+24);
     return;
   }
 
@@ -473,26 +512,24 @@ function drawLineChart(canvas, series){
   });
   ctx.stroke();
 
-  // labels (min/max)
+  // labels
   ctx.fillStyle = "rgba(11,18,32,.70)";
   ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-  ctx.fillText(fmtUSD(maxV), 8, padT+10);
-  ctx.fillText(fmtUSD(minV), 8, padT+plotH);
+  ctx.fillText(fmtUSD0(maxV), 8, padT+10);
+  ctx.fillText(fmtUSD0(minV), 8, padT+plotH);
 
-  // x labels (start/end)
+  // x labels
   const start = series[0].date;
   const end = series[series.length-1].date;
   ctx.fillStyle = "rgba(11,18,32,.55)";
-  ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
   ctx.fillText(start, padL, H-12);
   const endW = ctx.measureText(end).width;
   ctx.fillText(end, W-padR-endW, H-12);
 }
 
-function computeMaxDrawdown(series){
-  // series nav array
+function computeMaxDrawdown(navs){
   let peak = -Infinity, mdd = 0;
-  for(const v of series){
+  for(const v of navs){
     if(v > peak) peak = v;
     const dd = (peak - v) / peak;
     if(dd > mdd) mdd = dd;
@@ -500,82 +537,9 @@ function computeMaxDrawdown(series){
   return mdd;
 }
 
-async function render(){
-  el("totalCap").textContent = fmtUSD(TOTAL_CAPITAL);
-  el("asof").textContent = new Date().toLocaleDateString(undefined,{year:"numeric",month:"short",day:"2-digit"});
-  el("refreshed").textContent = "fetching…";
-
-  // 1) Latest prices
-  const latest = {};
-  let asofDate = null;
-
-  try{
-    await Promise.all(tickers.map(async t=>{
-      const {close, date} = await fetchLatestClose(stooqSymbol[t]);
-      latest[t] = close;
-      if(!asofDate || date > asofDate) asofDate = date;
-    }));
-  }catch(err){
-    el("refreshed").textContent = "error";
-    console.error(err);
-    alert("Price fetch failed for at least one symbol. Check your stooqSymbol mapping (e.g. .us/.ca) and try again.");
-    return;
-  }
-
-  el("refreshed").textContent = `${asofDate ?? "—"} close`;
-
-  // 2) Table + portfolio P/L
-  const tbody = el("rows");
-  tbody.innerHTML = "";
-
-  let invested = 0;
-  let costTotal = 0;
-  let plTotal = 0;
-
-  for(const t of tickers){
-    const sh = shares[t];
-    const px = latest[t];
-    const mv = sh * px;
-    const cost = sh * entry[t];
-    const pl = mv - cost;
-    const plPct = (pl / cost) * 100;
-
-    invested += mv;
-    costTotal += cost;
-    plTotal += pl;
-
-    const cls = pl >= 0 ? "pos" : "neg";
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>
-        <strong>${meta[t].name}</strong><br/>
-        <small>${meta[t].stage}</small>
-      </td>
-      <td class="mono"><strong>${t}</strong></td>
-      <td class="mono">${sh.toFixed(4)}</td>
-      <td class="mono">${fmtUSDCents(entry[t])}</td>
-      <td class="mono">${fmtUSDCents(px)}</td>
-      <td class="mono">${fmtUSD(cost)}</td>
-      <td class="mono">${fmtUSD(mv)}</td>
-      <td class="mono ${cls}">${fmtUSD(pl)}</td>
-      <td class="mono ${cls}">${fmtPct(plPct)}</td>
-      <td>${meta[t].stage}</td>
-    `;
-    tbody.appendChild(tr);
-  }
-
-  const cash = Math.max(0, TOTAL_CAPITAL - invested);
-  const portValue = invested + cash;
-  const since = ((portValue / TOTAL_CAPITAL) - 1) * 100;
-
-  el("portValue").textContent = fmtUSD(portValue);
-  el("portPL").textContent = (plTotal>=0?"+":"") + fmtUSD(plTotal);
-  el("sinceInception").textContent = fmtPct(since);
-
-  // 3) Theses blocks
-  const thesisWrap = el("thesisBlocks");
-  thesisWrap.innerHTML = "";
+function renderTheses(){
+  const wrap = el("thesisBlocks");
+  wrap.innerHTML = "";
   for(const t of tickers){
     const d = document.createElement("details");
     d.innerHTML = `
@@ -591,64 +555,212 @@ async function render(){
         </div>
       </div>
     `;
-    thesisWrap.appendChild(d);
+    wrap.appendChild(d);
   }
+}
 
-  // 4) Performance since inception chart (aggregate daily closes)
-  // Build a date->price map per ticker, then compute daily NAV for intersection of dates.
-  const histories = {};
-  await Promise.all(tickers.map(async t=>{
-    histories[t] = await fetchHistorySince(stooqSymbol[t], INCEPTION_DATE);
-  }));
+function renderTableAndKPIs(latestPx, lastTs){
+  const tbody = el("rows");
+  tbody.innerHTML = "";
 
-  // Create lookup maps
-  const maps = {};
+  let invested = 0;
+  let costTotal = 0;
+  let plTotal = 0;
+
   for(const t of tickers){
-    maps[t] = new Map(histories[t].map(r => [r.date, r.close]));
+    const sh = shares[t];
+    const px = latestPx[t];
+    const mv = sh * px;
+    const cost = sh * entry[t];
+    const pl = mv - cost;
+    const plPct = (pl / cost) * 100;
+
+    invested += mv;
+    costTotal += cost;
+    plTotal += pl;
+
+    const cls = pl >= 0 ? "pos" : "neg";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><strong>${meta[t].name}</strong><br/><small>${meta[t].stage}</small></td>
+      <td class="mono"><strong>${t}</strong></td>
+      <td class="mono">${sh.toFixed(4)}</td>
+      <td class="mono">${fmtUSD2(entry[t])}</td>
+      <td class="mono">${fmtUSD2(px)}</td>
+      <td class="mono">${fmtUSD0(cost)}</td>
+      <td class="mono">${fmtUSD0(mv)}</td>
+      <td class="mono ${cls}">${fmtUSD0(pl)}</td>
+      <td class="mono ${cls}">${fmtPct(plPct)}</td>
+      <td>${meta[t].stage}</td>
+    `;
+    tbody.appendChild(tr);
   }
 
-  // Intersection dates across all tickers
-  const dateSets = tickers.map(t => new Set(histories[t].map(r=>r.date)));
+  const cash = Math.max(0, TOTAL_CAPITAL - invested);
+  const nav = invested + cash;
+  const si = ((nav / TOTAL_CAPITAL) - 1) * 100;
+
+  el("totalCap").textContent = fmtUSD0(TOTAL_CAPITAL);
+  el("nav").textContent = fmtUSD0(nav);
+  el("pl").textContent = (plTotal>=0?"+":"") + fmtUSD0(plTotal);
+  el("si").textContent = fmtPct(si);
+
+  el("lastTS").textContent = lastTs || "—";
+}
+
+async function refreshQuotes(){
+  el("quoteStatus").textContent = "refreshing… (rate-limited)";
+  const latestPx = {};
+  let lastTS = "";
+
+  for(let i=0;i<tickers.length;i++){
+    const t = tickers[i];
+    el("quoteStatus").textContent = `fetching ${t} (${i+1}/${tickers.length})…`;
+
+    try{
+      const q = await fetchQuote(t);
+      latestPx[t] = q.price;
+      if(q.ts && (!lastTS || q.ts > lastTS)) lastTS = q.ts;
+    }catch(err){
+      console.error(err);
+      el("quoteStatus").textContent = `error on ${t}`;
+      alert(`Quote fetch failed on ${t}. If you hit rate limits, wait ~60 seconds and try again.\n\nDetails: ${err.message}`);
+      return;
+    }
+
+    if(i < tickers.length - 1) await sleep(QUOTE_DELAY_MS);
+  }
+
+  // Persist last quotes for instant page load next time
+  localStorage.setItem("mbd_lastQuotes", JSON.stringify({ts: Date.now(), lastTS, latestPx}));
+
+  renderTableAndKPIs(latestPx, lastTS);
+  el("quoteStatus").textContent = `ok · ${tickers.length} quotes`;
+}
+
+// History caching
+function cacheKeyDaily(symbol){ return `mbd_daily_${symbol}`; }
+
+function getCachedDaily(symbol){
+  try{
+    const raw = localStorage.getItem(cacheKeyDaily(symbol));
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch{ return null; }
+}
+
+function setCachedDaily(symbol, payload){
+  localStorage.setItem(cacheKeyDaily(symbol), JSON.stringify(payload));
+}
+
+// Build NAV series from cached daily data
+function buildNavSeriesFromCache(){
+  const daily = {};
+  for(const t of tickers){
+    const cached = getCachedDaily(t);
+    if(!cached || !cached.series || !cached.series.length) return null;
+    daily[t] = cached.series;
+  }
+
+  // Create date->close maps and intersect dates
+  const maps = {};
+  const dateSets = [];
+  for(const t of tickers){
+    maps[t] = new Map(daily[t].map(r=>[r.date, r.close]));
+    const ds = new Set(daily[t].map(r=>r.date).filter(d=>d >= INCEPTION_DATE));
+    dateSets.push(ds);
+  }
   const dates = [...dateSets[0]].filter(d => dateSets.every(s => s.has(d))).sort();
+  if(dates.length < 2) return null;
+
+  // Cash held constant in USD (model)
+  const cash = TOTAL_CAPITAL - tickers.reduce((s,t)=>s + targetDollars[t], 0);
 
   const series = dates.map(date=>{
     let mv = 0;
     for(const t of tickers){
       mv += shares[t] * maps[t].get(date);
     }
-    const nav = mv + Math.max(0, TOTAL_CAPITAL - (tickers.reduce((s,t)=>s + (shares[t]*maps[t].get(date)),0)));
-    // Note: cash is held constant in USD (model). This keeps NAV conservative and stable.
-    return {date, nav};
+    return { date, nav: mv + cash };
   });
 
-  // Optional: compute and show MDD / simple stats (you can add to UI later)
-  const navs = series.map(s=>s.nav);
-  const mdd = computeMaxDrawdown(navs);
-
-  // Draw chart
-  drawLineChart(el("navChart"), series);
-
-  // Append a tiny stat line under chart (non-intrusive)
-  const note = document.querySelector(".chartbox .note");
-  note.innerHTML = `NAV computed from daily closes since <span class="mono">${INCEPTION_DATE}</span>. Max drawdown (NAV): <span class="mono">${(mdd*100).toFixed(2)}%</span>.`;
+  return series;
 }
 
-// Expand/collapse theses
+async function refreshHistory(){
+  el("chartNote").textContent = "Refreshing history… this is slow on the free tier (rate limited).";
+  // We fetch daily adjusted sequentially, respecting the same 5/min constraint.
+  for(let i=0;i<tickers.length;i++){
+    const t = tickers[i];
+    el("quoteStatus").textContent = `history ${t} (${i+1}/${tickers.length})…`;
+
+    try{
+      const series = await fetchDailyAdjusted(t);
+      setCachedDaily(t, { savedAt: Date.now(), series });
+    }catch(err){
+      console.error(err);
+      el("quoteStatus").textContent = `history error on ${t}`;
+      alert(`History refresh failed on ${t}. Likely rate limit. Wait ~60 seconds and try again.\n\nDetails: ${err.message}`);
+      return;
+    }
+
+    if(i < tickers.length - 1) await sleep(QUOTE_DELAY_MS);
+  }
+
+  const navSeries = buildNavSeriesFromCache();
+  drawLineChart(el("navChart"), navSeries);
+
+  if(navSeries){
+    const navs = navSeries.map(x=>x.nav);
+    const mdd = computeMaxDrawdown(navs) * 100;
+    el("chartNote").textContent = `History cached locally. NAV since ${INCEPTION_DATE}. Max drawdown (NAV): ${mdd.toFixed(2)}%.`;
+  }else{
+    el("chartNote").textContent = "History loaded, but couldn’t build NAV series (missing/insufficient overlap).";
+  }
+
+  el("quoteStatus").textContent = "history cached";
+}
+
+// UI: expand/collapse theses
 let expanded = false;
-document.getElementById("toggleThesisBtn").addEventListener("click", ()=>{
+el("toggleThesisBtn").addEventListener("click", ()=>{
   const blocks = document.querySelectorAll("#thesisBlocks details");
   expanded = !expanded;
   blocks.forEach(d => d.open = expanded);
-  document.getElementById("toggleThesisBtn").textContent = expanded ? "Collapse all theses" : "Expand all theses";
+  el("toggleThesisBtn").textContent = expanded ? "Collapse all theses" : "Expand all theses";
 });
 
-// Manual refresh
-document.getElementById("refreshBtn").addEventListener("click", ()=>{
-  render();
-});
+el("refreshQuotesBtn").addEventListener("click", refreshQuotes);
+el("refreshHistoryBtn").addEventListener("click", refreshHistory);
 
-// Initial render
-render();
+// Initial boot
+(function init(){
+  el("asof").textContent = new Date().toLocaleDateString(undefined,{year:"numeric",month:"short",day:"2-digit"});
+  el("totalCap").textContent = fmtUSD0(TOTAL_CAPITAL);
+  renderTheses();
+
+  // Load last cached quotes immediately (fast), then you can refresh intraday.
+  try{
+    const cached = JSON.parse(localStorage.getItem("mbd_lastQuotes") || "null");
+    if(cached && cached.latestPx){
+      renderTableAndKPIs(cached.latestPx, cached.lastTS || "");
+      el("quoteStatus").textContent = "cached quotes loaded";
+    }else{
+      el("quoteStatus").textContent = "no cached quotes";
+    }
+  }catch{
+    el("quoteStatus").textContent = "no cached quotes";
+  }
+
+  // Render chart from cached history if present
+  const navSeries = buildNavSeriesFromCache();
+  drawLineChart(el("navChart"), navSeries);
+  if(navSeries){
+    const navs = navSeries.map(x=>x.nav);
+    const mdd = computeMaxDrawdown(navs) * 100;
+    el("chartNote").textContent = `History cached locally. NAV since ${INCEPTION_DATE}. Max drawdown (NAV): ${mdd.toFixed(2)}%.`;
+  }
+})();
 </script>
 </body>
 </html>
