@@ -9,275 +9,68 @@
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
-    /* --- HERO: avoid top clipping + improve readability --- */
-    .hero-inner { padding-top: 22px; padding-bottom: 18px; } /* fixes “top cut off” feeling */
-
-    /* Make overlay a bit stronger + add a second gradient for text area */
-    .hero-overlay{
-      /* If your CSS already defines this class, this will override it */
-      background:
-        radial-gradient(1000px 520px at 28% 40%, rgba(0,0,0,.55), rgba(0,0,0,.10) 60%, rgba(0,0,0,.10) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.25) 35%, rgba(0,0,0,.20) 70%, rgba(0,0,0,.35));
+    /* Small featured bar under hero */
+    .featured-strip{
+      background:#fff;
+      border-top:1px solid rgba(15,23,42,.08);
+      border-bottom:1px solid rgba(15,23,42,.08);
     }
-
-    .hero-panel{
-      padding-top: 14px; /* extra breathing room */
-    }
-
-    .hero-panel h1{
-      text-shadow: 0 10px 28px rgba(0,0,0,.45);
-      letter-spacing: -0.02em;
-    }
-    .hero-panel p{
-      text-shadow: 0 8px 20px rgba(0,0,0,.35);
-      max-width: 72ch;
-    }
-
-    /* --- HERO SLIDESHOW (scoped) --- */
-    .hero-panel { position: relative; }
-
-    .hero-carousel {
-      position: relative;
-      overflow: hidden;
-      border-radius: 18px;
-    }
-
-    .hero-slides {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 100%;
-      transition: transform 520ms cubic-bezier(.2,.9,.2,1);
-      will-change: transform;
-    }
-
-    .hero-slide { padding: 0; }
-
-    .hero-slide .hero-eyebrow { margin-bottom: 10px; }
-    .hero-slide h1 { margin: 0 0 14px; }
-    .hero-slide p { margin: 0 0 18px; }
-
-    .hero-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .hero-dots {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .hero-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.40);
-      background: rgba(255,255,255,.18);
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .hero-dot[aria-current="true"]{
-      background: rgba(255,255,255,.92);
-      border-color: rgba(255,255,255,.92);
-    }
-
-    .hero-arrow {
-      border: 1px solid rgba(255,255,255,.24);
-      background: rgba(0,0,0,.18);
-      color: rgba(255,255,255,.92);
-      border-radius: 12px;
-      padding: 8px 10px;
-      cursor: pointer;
-      line-height: 1;
-      font-weight: 800;
-    }
-
-    .hero-arrow:hover {
-      background: rgba(0,0,0,.26);
-      border-color: rgba(255,255,255,.35);
-    }
-
-    .hero-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .02em;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(0,0,0,.18);
-      color: rgba(255,255,255,.92);
-      margin-bottom: 12px;
-    }
-
-    .hero-chip .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.85);
-      display: inline-block;
-    }
-
-    @media (max-width: 720px){
-      .hero-controls { flex-wrap: wrap; }
-    }
-
-    /* --- Portfolio carousel (below hero) --- */
-    .portfolio-carousel-wrap{
-      margin-top: 18px;
-      margin-bottom: 10px;
-    }
-
-    .pcard{
-      background: #fff;
-      border: 1px solid rgba(15,23,42,.10);
-      border-radius: 16px;
-      box-shadow: 0 10px 22px rgba(15,23,42,.06);
-      overflow: hidden;
-    }
-
-    .pcard-top{
-      display:flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 16px 18px 10px;
-      border-bottom: 1px solid rgba(15,23,42,.08);
-    }
-
-    .pcard-title{
-      font-weight: 900;
-      font-size: 14px;
-      letter-spacing: .02em;
-      text-transform: uppercase;
-      color: rgba(15,23,42,.72);
-    }
-
-    .pcard-sub{
-      font-size: 13px;
-      color: rgba(15,23,42,.60);
-      white-space: nowrap;
-    }
-
-    .p-slides{
-      display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 100%;
-      transition: transform 520ms cubic-bezier(.2,.9,.2,1);
-      will-change: transform;
-    }
-
-    .p-slide{
-      padding: 16px 18px 18px;
-    }
-
-    .kpis{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 12px;
-    }
-
-    .kpi{
-      border: 1px solid rgba(15,23,42,.10);
-      border-radius: 14px;
-      padding: 12px 12px;
-      background: rgba(248,250,252,.9);
-    }
-    .kpi .label{ font-size: 12px; color: rgba(15,23,42,.60); font-weight: 800; letter-spacing:.02em; text-transform: uppercase; }
-    .kpi .value{ font-size: 20px; font-weight: 900; margin-top: 4px; color: rgba(15,23,42,.92); }
-    .kpi .sub{ font-size: 12px; margin-top: 2px; color: rgba(15,23,42,.60); }
-
-    .alloc{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 14px;
-      margin-top: 6px;
-    }
-
-    .alloc-list{
-      border: 1px solid rgba(15,23,42,.10);
-      border-radius: 14px;
-      padding: 12px;
-      background: rgba(248,250,252,.9);
-    }
-    .alloc-row{
-      display:flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(15,23,42,.08);
-      font-size: 14px;
-    }
-    .alloc-row:last-child{ border-bottom: 0; }
-    .alloc-row b{ font-weight: 800; color: rgba(15,23,42,.92); }
-    .alloc-row span{ color: rgba(15,23,42,.72); }
-
-    .alloc-bars{
-      border: 1px solid rgba(15,23,42,.10);
-      border-radius: 14px;
-      padding: 12px;
-      background: rgba(248,250,252,.9);
-    }
-    .bar{
-      margin: 10px 0;
-    }
-    .bar .top{
-      display:flex; justify-content: space-between; font-size: 12px; color: rgba(15,23,42,.66);
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-    .bar .track{
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(15,23,42,.10);
-      overflow: hidden;
-    }
-    .bar .fill{
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, rgba(16,185,129,.75), rgba(59,130,246,.75));
-      border-radius: 999px;
-    }
-
-    .p-controls{
+    .featured-inner{
       display:flex;
       align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 18px 16px;
-      border-top: 1px solid rgba(15,23,42,.08);
-      background: #fff;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 0;
     }
-
-    .p-dots{ display:flex; gap:8px; align-items:center; }
-    .p-dot{
-      width: 9px; height: 9px; border-radius: 999px;
-      border: 1px solid rgba(15,23,42,.22);
-      background: rgba(15,23,42,.10);
-      cursor: pointer;
-      padding: 0;
+    .featured-left{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
     }
-    .p-dot[aria-current="true"]{ background: rgba(15,23,42,.82); border-color: rgba(15,23,42,.82); }
-
-    .p-btn{
-      border: 1px solid rgba(15,23,42,.14);
-      background: #fff;
-      border-radius: 12px;
-      padding: 8px 10px;
-      cursor: pointer;
-      font-weight: 800;
-      color: rgba(15,23,42,.86);
+    .featured-label{
+      font-size:12px;
+      font-weight:750;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(15,23,42,.55);
     }
-    .p-btn:hover{ border-color: rgba(15,23,42,.22); }
+    .featured-link{
+      font-size:15px;
+      font-weight:750;
+      color:#0f172a;
+      text-decoration:none;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 68vw;
+      display:block;
+    }
+    .featured-link:hover{ text-decoration:underline; text-underline-offset:3px; }
+    .featured-meta{
+      font-size:12px;
+      color:rgba(15,23,42,.60);
+    }
+    .featured-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.14);
+      background:#fff;
+      color:#0f172a;
+      text-decoration:none;
+      font-weight:650;
+      font-size:14px;
+      box-shadow:0 10px 24px rgba(2,6,23,.06);
+      flex:0 0 auto;
+    }
+    .featured-btn:hover{ box-shadow:0 14px 34px rgba(2,6,23,.10); }
 
-    @media (max-width: 900px){
-      .kpis{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .alloc{ grid-template-columns: 1fr; }
+    @media (max-width: 700px){
+      .featured-inner{ flex-direction:column; align-items:flex-start; }
+      .featured-link{ max-width: 92vw; }
     }
   </style>
 </head>
@@ -312,173 +105,45 @@
 
     <div class="container hero-inner">
       <div class="hero-panel">
+        <div class="hero-eyebrow">Independent research</div>
+        <h1>Institutional-grade market analysis for metals and macro</h1>
+        <p>
+          We focus on the mechanics behind price formation: inventory buffers, delivery windows,
+          funding and lease regimes, positioning pressure, and macro transmission across rates, FX,
+          and commodities.
+        </p>
 
-        <!-- Carousel wrapper -->
-        <div class="hero-carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Featured slides">
-          <div class="hero-slides" id="heroSlides">
-
-            <!-- SLIDE 1 -->
-            <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="Slide 1 of 2">
-              <div class="hero-eyebrow">Independent research</div>
-              <h1>Institutional-grade market analysis for metals and macro</h1>
-              <p>
-                We focus on the mechanics behind price formation: inventory buffers, delivery windows,
-                funding and lease regimes, positioning pressure, and macro transmission across rates, FX,
-                and commodities.
-              </p>
-
-              <div class="hero-actions">
-                <a class="btn primary" href="/posts.html">Read latest</a>
-                <a class="btn" href="/investments.html">Watchlist</a>
-                <a class="btn" href="/about.html">Method</a>
-              </div>
-
-              <div class="note" style="border-top-color: rgba(255,255,255,.22); color: rgba(255,255,255,.82);">
-                For informational purposes only. Not investment advice. See
-                <a href="/disclaimer.html" style="color:#fff; text-decoration:underline; text-underline-offset:3px;">disclaimer</a>.
-              </div>
-            </div>
-
-            <!-- SLIDE 2 -->
-            <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="Slide 2 of 2">
-              <div class="hero-chip"><span class="dot"></span> Latest post</div>
-              <h1>What Japan’s New Prime Minister Means for U.S. Stocks</h1>
-              <p>
-                A macro and market breakdown: interest rates, carry mechanics, capital flows, and how Japan’s policy shift
-                can transmit into U.S. equities and bonds.
-              </p>
-
-              <div class="hero-actions">
-                <a class="btn primary" href="/posts/2026-02-12-japan-pm-us-stocks.html">Read the report</a>
-                <a class="btn" href="/posts.html">View all posts</a>
-              </div>
-
-              <div class="note" style="border-top-color: rgba(255,255,255,.22); color: rgba(255,255,255,.82);">
-                Feb 12, 2026 · Macro · Informational only — not investment advice.
-              </div>
-            </div>
-
-          </div>
+        <div class="hero-actions">
+          <a class="btn primary" href="/posts.html">Read latest</a>
+          <a class="btn" href="/investments.html">Watchlist</a>
+          <a class="btn" href="/about.html">Method</a>
         </div>
 
-        <!-- Controls (NO progress bar now) -->
-        <div class="hero-controls" aria-label="Carousel controls">
-          <button class="hero-arrow" type="button" id="heroPrev" aria-label="Previous slide">←</button>
-
-          <div class="hero-dots" role="tablist" aria-label="Choose slide">
-            <button class="hero-dot" type="button" id="dot0" aria-label="Go to slide 1" aria-current="true"></button>
-            <button class="hero-dot" type="button" id="dot1" aria-label="Go to slide 2" aria-current="false"></button>
-          </div>
-
-          <button class="hero-arrow" type="button" id="heroNext" aria-label="Next slide">→</button>
+        <div class="note" style="border-top-color: rgba(255,255,255,.22); color: rgba(255,255,255,.80);">
+          For informational purposes only. Not investment advice. See
+          <a href="/disclaimer.html" style="color:#fff; text-decoration:underline; text-underline-offset:3px;">disclaimer</a>.
         </div>
-
       </div>
     </div>
 
     <div class="hero-fade" aria-hidden="true"></div>
   </section>
 
-  <!-- Portfolio performance carousel (below hero) -->
-  <section class="portfolio-carousel-wrap" aria-label="Portfolio performance">
-    <div class="container">
-      <div class="pcard" id="portCarousel" aria-roledescription="carousel" aria-label="Model portfolio performance">
-        <div class="pcard-top">
-          <div class="pcard-title">Model portfolio</div>
-          <div class="pcard-sub">Base capital: US$100,000 · Informational only</div>
-        </div>
+  <!-- Featured story strip (auto updates from Substack) -->
+  <section class="featured-strip" aria-label="Featured story">
+    <div class="container featured-inner">
+      <div class="featured-left">
+        <div class="featured-label">Featured story</div>
 
-        <div class="p-slides" id="pSlides">
-          <!-- Slide A: KPIs -->
-          <div class="p-slide" role="group" aria-roledescription="slide" aria-label="Portfolio slide 1 of 2">
-            <div class="kpis">
-              <div class="kpi">
-                <div class="label">Net liquidation</div>
-                <div class="value" id="kpiNet">US$100,000</div>
-                <div class="sub">Cash + holdings (model)</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Total P&amp;L</div>
-                <div class="value" id="kpiPnl">US$0</div>
-                <div class="sub">Since entry (manual or future feed)</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Exposure</div>
-                <div class="value" id="kpiExp">US$100,000</div>
-                <div class="sub">Allocated capital</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Positions</div>
-                <div class="value" id="kpiPos">6</div>
-                <div class="sub">Current watchlist</div>
-              </div>
-            </div>
+        <!-- Fallback link (will be replaced by JS if feed loads) -->
+        <a id="featuredLink" class="featured-link" href="/posts.html">
+          Latest post loading…
+        </a>
 
-            <div class="note" style="margin-top: 12px;">
-              This panel is a clean “dashboard” for your public site. If you want, we can later wire it to your
-              Investments page so it reads the same saved prices automatically.
-            </div>
-          </div>
-
-          <!-- Slide B: Allocation breakdown -->
-          <div class="p-slide" role="group" aria-roledescription="slide" aria-label="Portfolio slide 2 of 2">
-            <div class="alloc">
-              <div class="alloc-list" aria-label="Allocation list">
-                <div class="alloc-row"><b>Alamos Gold (AGI)</b><span>US$28,000</span></div>
-                <div class="alloc-row"><b>Fortuna Mining (FSM)</b><span>US$22,000</span></div>
-                <div class="alloc-row"><b>Galiano Gold (GAU)</b><span>US$18,000</span></div>
-                <div class="alloc-row"><b>Newfound Gold (NFGC)</b><span>US$12,000</span></div>
-                <div class="alloc-row"><b>Vista Gold (VGZ)</b><span>US$8,000</span></div>
-                <div class="alloc-row"><b>New Pacific Metals (NEWP)</b><span>US$12,000</span></div>
-              </div>
-
-              <div class="alloc-bars" aria-label="Allocation bars">
-                <div class="bar">
-                  <div class="top"><span>AGI</span><span>28%</span></div>
-                  <div class="track"><div class="fill" style="width:28%"></div></div>
-                </div>
-                <div class="bar">
-                  <div class="top"><span>FSM</span><span>22%</span></div>
-                  <div class="track"><div class="fill" style="width:22%"></div></div>
-                </div>
-                <div class="bar">
-                  <div class="top"><span>GAU</span><span>18%</span></div>
-                  <div class="track"><div class="fill" style="width:18%"></div></div>
-                </div>
-                <div class="bar">
-                  <div class="top"><span>NFGC</span><span>12%</span></div>
-                  <div class="track"><div class="fill" style="width:12%"></div></div>
-                </div>
-                <div class="bar">
-                  <div class="top"><span>VGZ</span><span>8%</span></div>
-                  <div class="track"><div class="fill" style="width:8%"></div></div>
-                </div>
-                <div class="bar">
-                  <div class="top"><span>NEWP</span><span>12%</span></div>
-                  <div class="track"><div class="fill" style="width:12%"></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-controls" aria-label="Portfolio carousel controls">
-          <div style="display:flex; gap:10px; align-items:center;">
-            <button class="p-btn" type="button" id="pPrev" aria-label="Previous portfolio slide">←</button>
-            <button class="p-btn" type="button" id="pNext" aria-label="Next portfolio slide">→</button>
-          </div>
-
-          <div class="p-dots" role="tablist" aria-label="Choose portfolio slide">
-            <button class="p-dot" type="button" id="pdot0" aria-label="Go to portfolio slide 1" aria-current="true"></button>
-            <button class="p-dot" type="button" id="pdot1" aria-label="Go to portfolio slide 2" aria-current="false"></button>
-          </div>
-
-          <div style="font-size:12px; color: rgba(15,23,42,.60); font-weight:700;">
-            Portfolio dashboard (public-facing)
-          </div>
-        </div>
-
+        <div id="featuredMeta" class="featured-meta">Auto-updated from Substack</div>
       </div>
+
+      <a class="featured-btn" href="/posts.html">View all posts</a>
     </div>
   </section>
 
@@ -490,19 +155,19 @@
       <section aria-label="Latest research">
         <div class="kicker">Latest</div>
         <h2>Recent research</h2>
-        <p class="lead">Featured report. Browse the full archive on the Posts page.</p>
+        <p class="lead">Browse the full archive on the Posts page.</p>
 
         <div class="block">
           <article class="post">
             <div class="post-meta">
-              <span>Metals</span>
-              <time datetime="2026-02-07">Feb 07, 2026</time>
+              <span>Research</span>
+              <time datetime="2026-02-12">Feb 12, 2026</time>
             </div>
-            <a class="post-title" href="/posts/2026-02-07-silver-market-outlook-comex-inventory.html">
-              Silver Market Outlook: Physical Tightness, COMEX Inventory, and What Investors Should Watch
+            <a class="post-title" href="/posts.html">
+              See the newsroom for the latest post.
             </a>
             <p class="post-excerpt">
-              Registered vs eligible inventory, delivery windows, and lease-rate signals—why volatility risk rises when buffers thin.
+              Posts update automatically from Substack (no manual HTML needed).
             </p>
           </article>
         </div>
@@ -559,100 +224,72 @@
   </footer>
 
   <script>
-    // HERO carousel (no progress bar)
-    (function(){
-      const slidesEl = document.getElementById("heroSlides");
-      const carouselEl = document.getElementById("heroCarousel");
-      const btnPrev = document.getElementById("heroPrev");
-      const btnNext = document.getElementById("heroNext");
-      const dots = [
-        document.getElementById("dot0"),
-        document.getElementById("dot1"),
-      ];
+    // Pull the latest post title + link from Substack and show in the featured bar
+    const SUBSTACK_FEED = "https://marketbriefdaily.substack.com/feed";
+    const RSS2JSON = "https://api.rss2json.com/v1/api.json?rss_url=";
 
-      const slideCount = dots.length;
-      let index = 0;
-      let interval = null;
+    const CACHE_KEY = "mbd_substack_featured_cache_v1";
+    const CACHE_TTL_MS = 30 * 60 * 1000;
 
-      const INTERVAL_MS = 9000;
+    function stripHtml(html){
+      const tmp = document.createElement("div");
+      tmp.innerHTML = html || "";
+      return (tmp.textContent || tmp.innerText || "").trim();
+    }
+    function fmtDate(d){
+      try {
+        return new Date(d).toLocaleDateString(undefined, {year:"numeric", month:"short", day:"2-digit"});
+      } catch { return ""; }
+    }
 
-      function setIndex(i){
-        index = (i + slideCount) % slideCount;
-        slidesEl.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((d, di) => d.setAttribute("aria-current", di === index ? "true" : "false"));
+    async function loadFeatured(){
+      const linkEl = document.getElementById("featuredLink");
+      const metaEl = document.getElementById("featuredMeta");
+
+      // cache
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached){
+        try{
+          const c = JSON.parse(cached);
+          if (Date.now() - c.time < CACHE_TTL_MS && c.item){
+            linkEl.textContent = c.item.title;
+            linkEl.href = c.item.link;
+            linkEl.target = "_blank";
+            linkEl.rel = "noopener";
+            metaEl.textContent = `${c.item.date} • Market Brief Daily (Substack)`;
+            return;
+          }
+        }catch{}
       }
 
-      function start(){
-        stop();
-        interval = setInterval(() => setIndex(index + 1), INTERVAL_MS);
+      try{
+        const url = RSS2JSON + encodeURIComponent(SUBSTACK_FEED);
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error("Feed fetch failed");
+        const data = await res.json();
+        if (!data.items || !data.items.length) throw new Error("No items");
+
+        const item = data.items[0];
+        const title = stripHtml(item.title);
+        const date = fmtDate(item.pubDate);
+
+        linkEl.textContent = title;
+        linkEl.href = item.link;
+        linkEl.target = "_blank";
+        linkEl.rel = "noopener";
+        metaEl.textContent = `${date} • Market Brief Daily (Substack)`;
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), item: { title, link: item.link, date } }));
+      }catch(err){
+        // fallback: keep it pointing to /posts.html
+        linkEl.textContent = "View latest posts";
+        linkEl.href = "/posts.html";
+        metaEl.textContent = "Auto-updated from Substack (feed unavailable right now)";
+        console.error(err);
       }
-      function stop(){
-        if (interval) clearInterval(interval);
-        interval = null;
-      }
+    }
 
-      btnPrev.addEventListener("click", () => { setIndex(index - 1); start(); });
-      btnNext.addEventListener("click", () => { setIndex(index + 1); start(); });
-      dots.forEach((d, di) => d.addEventListener("click", () => { setIndex(di); start(); }));
-
-      carouselEl.addEventListener("mouseenter", stop);
-      carouselEl.addEventListener("mouseleave", start);
-      carouselEl.addEventListener("focusin", stop);
-      carouselEl.addEventListener("focusout", start);
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") { setIndex(index - 1); start(); }
-        if (e.key === "ArrowRight") { setIndex(index + 1); start(); }
-      });
-
-      setIndex(0);
-      start();
-    })();
-
-    // Portfolio carousel (below hero)
-    (function(){
-      const slidesEl = document.getElementById("pSlides");
-      const btnPrev = document.getElementById("pPrev");
-      const btnNext = document.getElementById("pNext");
-      const dots = [
-        document.getElementById("pdot0"),
-        document.getElementById("pdot1"),
-      ];
-      const slideCount = dots.length;
-      let index = 0;
-      let interval = null;
-
-      const INTERVAL_MS = 11000;
-
-      function setIndex(i){
-        index = (i + slideCount) % slideCount;
-        slidesEl.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((d, di) => d.setAttribute("aria-current", di === index ? "true" : "false"));
-      }
-
-      function start(){
-        stop();
-        interval = setInterval(() => setIndex(index + 1), INTERVAL_MS);
-      }
-      function stop(){
-        if (interval) clearInterval(interval);
-        interval = null;
-      }
-
-      btnPrev.addEventListener("click", () => { setIndex(index - 1); start(); });
-      btnNext.addEventListener("click", () => { setIndex(index + 1); start(); });
-      dots.forEach((d, di) => d.addEventListener("click", () => { setIndex(di); start(); }));
-
-      // Pause on hover for the whole card
-      const card = document.getElementById("portCarousel");
-      card.addEventListener("mouseenter", stop);
-      card.addEventListener("mouseleave", start);
-      card.addEventListener("focusin", stop);
-      card.addEventListener("focusout", start);
-
-      setIndex(0);
-      start();
-    })();
+    loadFeatured();
   </script>
 </body>
 </html>
