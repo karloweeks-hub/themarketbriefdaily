@@ -4,53 +4,53 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Investments | The Market Brief Daily</title>
-  <meta name="description" content="Model portfolio tracker with allocations, prices, and thesis notes." />
+  <meta name="description" content="Model portfolio tracker with allocations, pricing, shares, and P&L." />
   <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="/assets/style.css" />
-
   <style>
-    .inv-topgrid{display:grid;grid-template-columns:1.1fr 1.9fr;gap:18px;align-items:stretch}
-    @media (max-width: 980px){.inv-topgrid{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid rgba(15,23,42,.10);border-radius:16px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+    /* Page-only polish (keeps it professional without breaking global styles) */
+    .inv-shell{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}
+    @media (max-width: 980px){.inv-shell{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid rgba(15,23,42,.10);border-radius:16px;box-shadow:0 1px 1px rgba(0,0,0,.03)}
     .card-pad{padding:18px}
-    .muted{color:rgba(15,23,42,.62)}
-    .mono{font-variant-numeric: tabular-nums}
+    .muted{color:rgba(15,23,42,.65)}
+    .tiny{font-size:12px}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
-    .btnx{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border-radius:999px;border:1px solid rgba(15,23,42,.12);background:#fff;color:#0f172a;font-weight:600;cursor:pointer}
+    .btnx{appearance:none;border:1px solid rgba(15,23,42,.14);background:#fff;border-radius:999px;padding:10px 12px;font-weight:600;cursor:pointer}
     .btnx:hover{background:rgba(15,23,42,.03)}
-    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
     @media (max-width: 980px){.kpis{grid-template-columns:repeat(2,1fr)}}
-    .kpi{border:1px solid rgba(15,23,42,.10);border-radius:14px;padding:12px;background:rgba(248,250,252,.7)}
-    .kpi .label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(15,23,42,.55)}
-    .kpi .value{font-size:22px;font-weight:800;margin-top:6px}
-    .kpi .sub{font-size:12px;color:rgba(15,23,42,.60);margin-top:6px}
-    .good{color:#0f766e}
-    .bad{color:#b91c1c}
-    .table-wrap{overflow:auto;border-radius:14px;border:1px solid rgba(15,23,42,.10)}
-    table{width:100%;border-collapse:collapse;background:#fff}
-    thead th{position:sticky;top:0;background:#fff;border-bottom:1px solid rgba(15,23,42,.10);padding:12px;text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(15,23,42,.55);white-space:nowrap}
-    tbody td{border-bottom:1px solid rgba(15,23,42,.08);padding:12px;vertical-align:top;white-space:nowrap}
-    tbody tr:hover{background:rgba(15,23,42,.02)}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid rgba(15,23,42,.12);background:#fff;white-space:nowrap}
+    .kpi{padding:14px;border:1px solid rgba(15,23,42,.10);border-radius:14px}
+    .kpi .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,23,42,.55)}
+    .kpi .value{font-size:20px;font-weight:800;margin-top:6px}
+    .kpi .sub{font-size:12px;color:rgba(15,23,42,.60);margin-top:4px}
+    .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    @media (max-width: 980px){.grid2{grid-template-columns:1fr}}
+    .pie-wrap{display:flex;gap:14px;align-items:center;justify-content:center;padding:10px 10px 16px}
+    .legend{display:grid;gap:8px;align-content:start}
+    .lg{display:flex;gap:8px;align-items:center;font-size:13px;color:rgba(15,23,42,.78)}
+    .sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .table-wrap{overflow:auto;border-top:1px solid rgba(15,23,42,.08)}
+    table{width:100%;border-collapse:collapse;min-width:980px}
+    th,td{padding:12px 14px;border-bottom:1px solid rgba(15,23,42,.08);vertical-align:top}
+    th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,23,42,.55);background:rgba(15,23,42,.02);position:sticky;top:0;z-index:1}
+    td b{font-weight:800}
+    .pill{display:inline-flex;align-items:center;border:1px solid rgba(15,23,42,.14);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
     .pill.low{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.22)}
-    .pill.med{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.26)}
-    .pill.high{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.22)}
-    .rowtitle{font-weight:800}
-    .rowmeta{font-size:12px;color:rgba(15,23,42,.60);margin-top:3px}
-    details{border:1px solid rgba(15,23,42,.10);border-radius:14px;background:#fff}
-    details + details{margin-top:10px}
-    summary{cursor:pointer;list-style:none;padding:14px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-    summary::-webkit-details-marker{display:none}
-    .sum-left{display:flex;flex-direction:column;gap:4px}
-    .sum-right{display:flex;gap:8px;align-items:center}
-    .details-body{padding:0 14px 14px 14px;color:rgba(15,23,42,.85)}
-    .small{font-size:12px;color:rgba(15,23,42,.60)}
-    .feedline{font-size:12px;color:rgba(15,23,42,.60);margin-top:8px}
-    .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .leg{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(15,23,42,.70)}
-    .sw{width:10px;height:10px;border-radius:999px;display:inline-block}
-    .chart-box{margin-top:10px;border:1px solid rgba(15,23,42,.10);border-radius:14px;overflow:hidden;background:#fff}
-    .chart-iframe{width:100%;height:260px;border:0;display:block}
+    .pill.med{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.25)}
+    .pill.high{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.25)}
+    .pos{color:#0a7a3d;font-weight:800}
+    .neg{color:#b42318;font-weight:800}
+    .row-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end}
+    .linkbtn{font-weight:700;text-decoration:none}
+    .details{display:none;padding:14px 14px 16px;background:rgba(15,23,42,.02)}
+    .details.open{display:block}
+    .details .h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .details h3{margin:0;font-size:16px}
+    .details p{margin:8px 0;color:rgba(15,23,42,.78);line-height:1.5}
+    .tv{border-radius:14px;overflow:hidden;border:1px solid rgba(15,23,42,.10)}
+    .tv iframe{display:block;width:100%;height:420px;border:0}
+    .section-gap{height:14px}
   </style>
 </head>
 
@@ -81,126 +81,175 @@
     <div class="container">
       <header class="page-header">
         <div class="page-kicker">Investments</div>
-        <h1 class="page-title">Model portfolio + watchlist</h1>
+        <h1 class="page-title">Model portfolio</h1>
         <p class="page-lead">
           Informational only — not investment advice. See <a href="/disclaimer.html">disclaimer</a>.
         </p>
       </header>
 
-      <section class="inv-topgrid" aria-label="Portfolio overview">
-        <div class="card card-pad">
-          <div class="small" style="letter-spacing:.08em;text-transform:uppercase;">Model portfolio</div>
-          <div class="rowtitle" style="font-size:18px;margin-top:6px;">Portfolio capital: <span class="mono">US$100,000</span></div>
-          <div class="feedline">
-            Entry date: <b>2026-02-12</b> (entry is fixed). Current prices refresh from <code>/data/prices.json</code>.
-          </div>
-
-          <div class="btnrow" style="margin-top:12px;">
-            <button class="btnx" id="btnRefresh" type="button">Refresh prices</button>
-            <button class="btnx" id="btnReset" type="button">Reset portfolio</button>
-          </div>
-
-          <div class="kpis" aria-label="Key metrics">
-            <div class="kpi">
-              <div class="label">Net liquidation</div>
-              <div class="value mono" id="kpiNet">—</div>
-              <div class="sub">Cash + holdings value</div>
+      <div class="inv-shell">
+        <!-- LEFT: controls + KPIs -->
+        <section class="card" aria-label="Portfolio controls">
+          <div class="card-pad">
+            <div class="tiny muted" style="letter-spacing:.12em;text-transform:uppercase;">Model portfolio</div>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-top:6px;">
+              <div>
+                <div style="font-weight:900;font-size:18px;">Portfolio capital: <span id="capLabel">US$100,000</span></div>
+                <div class="tiny muted" style="margin-top:6px;">
+                  Entry date: <b>2026-02-12</b> (entry fixed). Current prices refresh from <code>/data/prices.json</code> (hourly).
+                </div>
+                <div class="tiny muted" style="margin-top:4px;">Price feed as-of: <span id="asOf">—</span></div>
+              </div>
             </div>
-            <div class="kpi">
-              <div class="label">Total P&amp;L</div>
-              <div class="value mono" id="kpiPnL">—</div>
-              <div class="sub">Since entry</div>
+
+            <div class="section-gap"></div>
+
+            <div class="btnrow">
+              <button class="btnx" id="btnRefresh">Refresh prices</button>
+              <button class="btnx" id="btnReset">Reset portfolio</button>
             </div>
-            <div class="kpi">
-              <div class="label">Cash</div>
-              <div class="value mono" id="kpiCash">—</div>
-              <div class="sub">Unallocated</div>
+
+            <div class="section-gap"></div>
+
+            <div class="kpis">
+              <div class="kpi">
+                <div class="label">Net liquidation</div>
+                <div class="value" id="kNet">—</div>
+                <div class="sub">Cash + holdings value</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Total P&L</div>
+                <div class="value" id="kPnL">—</div>
+                <div class="sub">Since entry open</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Cash</div>
+                <div class="value" id="kCash">—</div>
+                <div class="sub">Unallocated cash</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Exposure</div>
+                <div class="value" id="kExp">—</div>
+                <div class="sub">Market value invested</div>
+              </div>
             </div>
-            <div class="kpi">
-              <div class="label">Exposure</div>
-              <div class="value mono" id="kpiExposure">—</div>
-              <div class="sub">Market value invested</div>
-            </div>
-          </div>
 
-          <div class="note" style="margin-top:12px;">
-            <b>Constraint:</b> each holding is ≤ <b>5%</b> of total capital. The remainder stays as cash by design.
-          </div>
+            <div class="section-gap"></div>
 
-          <div class="feedline" id="feedStatus">Price feed: —</div>
-        </div>
-
-        <div class="card card-pad">
-          <div class="small" style="letter-spacing:.08em;text-transform:uppercase;">Allocation pie</div>
-          <h2 style="margin:6px 0 0 0;">Portfolio allocations</h2>
-          <div class="muted" style="margin-top:6px;">Includes cash. Holdings are capped at 5% each.</div>
-
-          <div style="display:flex;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap;">
-            <canvas id="pie" width="340" height="340" style="max-width:340px;width:100%;height:auto;"></canvas>
-            <div style="flex:1;min-width:220px;">
-              <div class="legend" id="legend"></div>
-              <div class="small" style="margin-top:10px;">
-                Tip: change allocations in the <code>DEFAULT_PORTFOLIO</code> block in this file later as you add more names.
+            <div class="card" style="border-radius:14px;">
+              <div class="card-pad tiny muted" style="line-height:1.55;">
+                <b>Constraint:</b> each holding is capped at <b>5%</b> of total capital. The remainder stays as cash by design.<br/>
+                <b>Mechanics:</b> shares = allocation ÷ entry. P&L updates automatically as current prices update.
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <div style="height:18px;"></div>
+        <!-- RIGHT: pie -->
+        <section class="card" aria-label="Allocation pie">
+          <div class="card-pad">
+            <div class="tiny muted" style="letter-spacing:.12em;text-transform:uppercase;">Allocation pie</div>
+            <h2 style="margin:6px 0 0 0;font-size:22px;">Portfolio allocations</h2>
+            <div class="muted" style="margin-top:6px;">Includes cash. Holdings are capped at 5% each.</div>
 
-      <section class="card" aria-label="Holdings">
+            <div class="pie-wrap">
+              <canvas id="pie" width="320" height="320" aria-label="Allocation pie chart"></canvas>
+              <div class="legend" id="legend"></div>
+            </div>
+
+            <div class="tiny muted" style="text-align:center;padding-bottom:6px;">
+              Tip: to add more stocks later, edit the <code>DEFAULT_PORTFOLIO.holdings</code> block in this file.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="section-gap"></div>
+
+      <!-- Holdings table -->
+      <section class="card" aria-label="Holdings table">
         <div class="card-pad">
-          <div class="small" style="letter-spacing:.08em;text-transform:uppercase;">Holdings</div>
-          <h2 style="margin:6px 0 0 0;">Portfolio holdings</h2>
+          <div class="tiny muted" style="letter-spacing:.12em;text-transform:uppercase;">Holdings</div>
+          <h2 style="margin:6px 0 0 0;font-size:22px;">Portfolio holdings</h2>
           <div class="muted" style="margin-top:6px;">
-            Entry is fixed (captured at creation). Current price updates when <code>/data/prices.json</code> updates (hourly via GitHub Actions).
+            Entry is fixed (market open on 2026-02-12). Current prices update hourly when <code>/data/prices.json</code> updates.
           </div>
         </div>
 
-        <div class="table-wrap" aria-label="Holdings table">
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Stock</th>
+                <th style="min-width:240px;">Stock</th>
                 <th>Risk</th>
                 <th>Allocation</th>
-                <th>Entry (2026-02-12)</th>
+                <th>Entry (Open 2026-02-12)</th>
                 <th>Current</th>
                 <th>Shares</th>
-                <th>Market Value</th>
-                <th>P&amp;L</th>
-                <th>P&amp;L %</th>
+                <th>Market value</th>
+                <th>P&L</th>
+                <th>P&L %</th>
+                <th style="min-width:160px;"></th>
               </tr>
             </thead>
-            <tbody id="holdingsBody"></tbody>
+            <tbody id="rows"></tbody>
           </table>
         </div>
       </section>
 
-      <div style="height:18px;"></div>
+      <div class="section-gap"></div>
 
-      <section class="card" aria-label="Thesis">
-        <div class="card-pad" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
-          <div>
-            <div class="small" style="letter-spacing:.08em;text-transform:uppercase;">Thesis</div>
-            <h2 style="margin:6px 0 0 0;">Click a holding to view rationale</h2>
-            <div class="muted" style="margin-top:6px;">
-              Each item links to the blog post where it was selected.
+      <!-- Detail drawer -->
+      <section class="card" aria-label="Thesis and chart">
+        <div class="card-pad">
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;">
+            <div>
+              <div class="tiny muted" style="letter-spacing:.12em;text-transform:uppercase;">Thesis</div>
+              <h2 style="margin:6px 0 0 0;font-size:22px;">Click a holding to view rationale</h2>
+              <div class="muted" style="margin-top:6px;">
+                Each holding includes thesis + primary risks and links to the selection post (update links as you publish those).
+              </div>
+            </div>
+            <a class="btnx linkbtn" href="/posts.html">Open newsroom</a>
+          </div>
+
+          <div class="section-gap"></div>
+
+          <div id="detailBox" class="details open" style="border-radius:14px;">
+            <div class="h">
+              <div>
+                <h3 id="dTitle">Select a holding</h3>
+                <div class="tiny muted" id="dMeta">—</div>
+              </div>
+              <div class="row-actions">
+                <a id="dPost" class="linkbtn" href="/posts.html">View selection post →</a>
+              </div>
+            </div>
+
+            <p><b>Why it’s on the list:</b> <span id="dWhy">—</span></p>
+            <p><b>Primary risks:</b> <span id="dRisks">—</span></p>
+
+            <div class="section-gap"></div>
+
+            <div class="tv">
+              <!-- TradingView advanced chart (works for these US tickers) -->
+              <iframe id="tvFrame"
+                title="Chart"
+                loading="lazy"
+                src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview&symbol=NYSE%3AAGI&interval=D&hidesidetoolbar=1&symboledit=1&saveimage=0&toolbarbg=ffffff&studies=%5B%5D&hideideas=1&theme=light&style=1&timezone=Etc%2FUTC&withdateranges=1&hidevolume=0&allow_symbol_change=1">
+              </iframe>
             </div>
           </div>
-          <a class="btnx" href="/posts.html">Open newsroom</a>
-        </div>
-
-        <div class="card-pad" style="padding-top:0;">
-          <div id="thesisList"></div>
         </div>
       </section>
 
-      <div class="note" style="margin-top:16px;">
-        <b>Important:</b> GitHub Pages can’t securely fetch live market data directly from the browser (CORS/API keys).
-        The professional approach is: <b>GitHub Actions</b> updates <code>/data/prices.json</code> hourly, and this page reads it.
+      <div class="section-gap"></div>
+
+      <div class="note">
+        <b>Important:</b> GitHub Pages can’t reliably fetch live market data directly from the browser (CORS/API keys).
+        The professional approach is exactly this: a GitHub Action updates <code>/data/prices.json</code> hourly, and the site reads it.
       </div>
+
     </div>
   </main>
 
@@ -219,293 +268,334 @@
   </footer>
 
   <script>
+    /**
+     * Fixed entry prices = market open on 2026-02-12.
+     * Source (captured at time of build):
+     *  AGI open 45.67  
+     *  FSM open 11.32  
+     *  GAU open 3.12   
+     *  NFGC open 2.95  
+     *  VGZ open 2.98   
+     *  NEWP open 3.90  
+     *
+     * Current prices are read from /data/prices.json and will update hourly via GitHub Actions.
+     */
+
     const STORAGE_KEY = "mbd_portfolio_v2";
-    const ENTRY_DATE = "2026-02-12";
 
     const DEFAULT_PORTFOLIO = {
-      cash: 75000,
+      baseCurrency: "USD",
+      capital: 100000,
+      entryDate: "2026-02-12",
       holdings: [
-        { name:"Alamos Gold", ticker:"AGI", risk:"Lower", allocation:5000, entry:43.91, tvSymbol:"NYSE:AGI",
-          link:"/posts/2026-02-07-silver-market-outlook-comex-inventory.html",
-          why:"Established producer profile with clearer cost/FCF dynamics versus pre-revenue developers; potential production growth optionality.",
-          risks:"Execution risk on guidance, cost inflation, and commodity beta."
+        {
+          name: "Alamos Gold",
+          ticker: "AGI",
+          tvSymbol: "NYSE:AGI",
+          risk: "Lower",
+          allocation: 5000, // 5% cap
+          entry: 45.67,
+          why: "Established producer profile with clearer cost / FCF dynamics versus pre-revenue developers; potential production growth optionality.",
+          risks: "Execution risk on guidance, cost inflation, and commodity beta.",
+          selectionPost: "/posts.html"
         },
-        { name:"Fortuna Mining", ticker:"FSM", risk:"Lower", allocation:5000, entry:10.58, tvSymbol:"NYSE:FSM",
-          link:"/posts/2026-02-07-silver-market-outlook-comex-inventory.html",
-          why:"Multi-asset exposure with geographic diversification; can reduce single-country dependence.",
-          risks:"Jurisdiction and operational risk across regions; cost control; metals-price volatility."
+        {
+          name: "Fortuna Mining",
+          ticker: "FSM",
+          tvSymbol: "NYSE:FSM",
+          risk: "Lower",
+          allocation: 5000,
+          entry: 11.32,
+          why: "Diversified operating footprint and liquid listing; a practical gold/silver hybrid to express metals exposure without single-asset dependence.",
+          risks: "Jurisdiction and operational risk across regions; cost control; metals-price volatility.",
+          selectionPost: "/posts.html"
         },
-        { name:"Galiano Gold", ticker:"GAU", risk:"Medium", allocation:4000, entry:2.835, tvSymbol:"NYSEAMERICAN:GAU",
-          link:"/posts/2026-02-09-druckenmiller-shadow.html",
-          why:"Asymmetric outcomes if the operating story improves; exploration and resource updates can move small caps disproportionately.",
-          risks:"Single-asset concentration; higher volatility; operational execution."
+        {
+          name: "Galiano Gold",
+          ticker: "GAU",
+          tvSymbol: "NYSEAMERICAN:GAU",
+          risk: "Medium",
+          allocation: 5000,
+          entry: 3.12,
+          why: "Asymmetric turnaround characteristics; exploration/updated resources can move small caps disproportionately.",
+          risks: "Single-asset concentration, operational disruption risk, and higher volatility typical of small caps.",
+          selectionPost: "/posts.html"
         },
-        { name:"Newfound Gold", ticker:"NFGC", risk:"Higher", allocation:3000, entry:2.77, tvSymbol:"NYSEAMERICAN:NFGC",
-          link:"/posts/2026-02-11-japan-pm-us-stocks.html",
-          why:"High-grade discovery potential; catalysts typically drilling/results and development milestones.",
-          risks:"Pre-revenue development; financing/dilution; timeline slippage; permitting."
+        {
+          name: "Newfound Gold",
+          ticker: "NFGC",
+          tvSymbol: "NYSEAMERICAN:NFGC",
+          risk: "Higher",
+          allocation: 5000,
+          entry: 2.95,
+          why: "High-grade Canadian discovery optionality; catalysts are exploration results and development milestones.",
+          risks: "Pre-revenue development (financing/dilution), timeline slippage, permitting, and gap between discovery excitement and economic development.",
+          selectionPost: "/posts.html"
         },
-        { name:"Vista Gold", ticker:"VGZ", risk:"Higher", allocation:3000, entry:2.76, tvSymbol:"NYSEAMERICAN:VGZ",
-          link:"/posts/2026-02-11-japan-pm-us-stocks.html",
-          why:"Single-asset development exposure can behave like leveraged beta to gold under the right conditions.",
-          risks:"No operating revenue; long timelines; financing requirements."
+        {
+          name: "Vista Gold",
+          ticker: "VGZ",
+          tvSymbol: "NYSEAMERICAN:VGZ",
+          risk: "Higher",
+          allocation: 5000,
+          entry: 2.98,
+          why: "Single-asset development exposure can behave like ‘pure leverage’ to gold price under the right conditions.",
+          risks: "No operating revenue, long timelines (late-decade execution), financing requirements, and commodity-price leverage cuts both ways.",
+          selectionPost: "/posts.html"
         },
-        { name:"New Pacific Metals", ticker:"NEWP", risk:"Higher", allocation:5000, entry:3.625, tvSymbol:"NYSE:NEWP",
-          link:"/posts/2026-02-07-silver-market-outlook-comex-inventory.html",
-          why:"Large undeveloped silver projects; potential upside if silver is bullish and the project de-risks.",
-          risks:"Geopolitical risk; community relations; nationalization history; silver volatility."
+        {
+          name: "New Pacific Metals",
+          ticker: "NEWP",
+          tvSymbol: "NYSEAMERICAN:NEWP",
+          risk: "Higher",
+          allocation: 5000,
+          entry: 3.90,
+          why: "Large undeveloped silver projects; upside if silver is bullish and the project de-risks over time.",
+          risks: "Country/geopolitical risk (including nationalization history), community relations, and silver’s higher volatility vs gold.",
+          selectionPost: "/posts.html"
         }
       ]
     };
 
-    const FALLBACK_PRICES = {
-      asOf: "2026-02-12T18:20:00Z",
-      quotes: { AGI:43.91, FSM:10.58, GAU:2.835, NFGC:2.77, VGZ:2.76, NEWP:3.625 }
+    const COLORS = {
+      AGI: "#2563eb",
+      FSM: "#ec4899",
+      GAU: "#f59e0b",
+      NFGC: "#ef4444",
+      VGZ: "#10b981",
+      NEWP: "#8b5cf6",
+      CASH: "#94a3b8"
     };
 
-    let lastFeed = null;
-
-    function usd(n, d=2){
+    function money(n, digits=2){
       if (n === null || n === undefined || Number.isNaN(n)) return "—";
-      return n.toLocaleString(undefined, { style:"currency", currency:"USD", minimumFractionDigits:d, maximumFractionDigits:d });
+      return n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:digits,minimumFractionDigits:digits});
     }
     function pct(n){
       if (n === null || n === undefined || Number.isNaN(n)) return "—";
       return (n*100).toFixed(2) + "%";
     }
-    function riskClass(r){
-      const x=(r||"").toLowerCase();
-      if (x.includes("lower")) return "low";
-      if (x.includes("medium")) return "med";
-      return "high";
-    }
+
+    function clone(x){ return JSON.parse(JSON.stringify(x)); }
 
     function loadPortfolio(){
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return structuredClone(DEFAULT_PORTFOLIO);
-      try { return JSON.parse(raw); } catch { return structuredClone(DEFAULT_PORTFOLIO); }
+      if (!raw) return clone(DEFAULT_PORTFOLIO);
+      try { return JSON.parse(raw); }
+      catch { return clone(DEFAULT_PORTFOLIO); }
     }
-    function savePortfolio(p){ localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+    function savePortfolio(p){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+    }
 
     async function fetchPrices(){
-      const url = "/data/prices.json?v=" + Date.now();
-      const res = await fetch(url, { cache:"no-store" });
-      if (!res.ok) throw new Error("Price feed missing");
+      // Cache-bust to avoid GH Pages aggressive caching
+      const url = "/data/prices.json?cb=" + Date.now();
+      const res = await fetch(url, {cache:"no-store"});
+      if (!res.ok) throw new Error("Failed to load /data/prices.json");
       return await res.json();
     }
 
-    function getQuote(ticker){
-      if (lastFeed && lastFeed.quotes && lastFeed.quotes[ticker] != null) return Number(lastFeed.quotes[ticker]);
-      if (FALLBACK_PRICES.quotes[ticker] != null) return Number(FALLBACK_PRICES.quotes[ticker]);
-      return null;
-    }
+    function calc(p, prices){
+      const cap = p.capital;
+      const investedCost = p.holdings.reduce((s,h)=>s+h.allocation,0);
+      const cash = Math.max(0, cap - investedCost);
 
-    function calcHolding(h){
-      const entry = Number(h.entry);
-      const current = getQuote(h.ticker);
-      const shares = (entry > 0) ? (h.allocation / entry) : null;
+      const rows = p.holdings.map(h => {
+        const entry = Number(h.entry);
+        const current = prices?.quotes?.[h.ticker]?.price ?? null;
 
-      const mkt = (shares !== null && current != null) ? (shares * current) : h.allocation;
-      const pnl = (shares !== null && current != null) ? (mkt - h.allocation) : 0;
-      const pnlPct = (h.allocation > 0) ? (pnl / h.allocation) : null;
+        const shares = (entry && entry > 0) ? (h.allocation / entry) : null;
+        const mkt = (shares !== null && current !== null) ? (shares * current) : null;
+        const mktOrCost = (mkt === null) ? h.allocation : mkt;
 
-      return { entry, current, shares, mkt, pnl, pnlPct };
-    }
+        const pnl = (mkt === null) ? 0 : (mkt - h.allocation);
+        const pnlPct = (mkt === null) ? 0 : (pnl / h.allocation);
 
-    function calcPortfolio(p){
-      let mv = 0, pnl = 0;
-      p.holdings.forEach(h=>{
-        const r = calcHolding(h);
-        mv += r.mkt;
-        pnl += r.pnl;
-      });
-      const net = p.cash + mv;
-      return { cash:p.cash, mv, pnl, net };
-    }
-
-    function renderPie(p, m){
-      const data = p.holdings.map(h=>({label:h.ticker, value:h.allocation}));
-      data.push({label:"CASH", value:p.cash});
-
-      const colors = {
-        "AGI":"#2563eb",
-        "FSM":"#7c3aed",
-        "GAU":"#0f766e",
-        "NFGC":"#f59e0b",
-        "VGZ":"#ef4444",
-        "NEWP":"#0ea5e9",
-        "CASH":"#94a3b8"
-      };
-
-      const canvas = document.getElementById("pie");
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width, H = canvas.height;
-      ctx.clearRect(0,0,W,H);
-
-      const total = data.reduce((s,d)=>s+d.value,0) || 1;
-      const cx=W/2, cy=H/2, r=Math.min(W,H)*0.40;
-
-      ctx.beginPath();
-      ctx.arc(cx,cy,r+18,0,Math.PI*2);
-      ctx.fillStyle="rgba(15,23,42,.04)";
-      ctx.fill();
-
-      let start=-Math.PI/2;
-      data.forEach(d=>{
-        const a=(d.value/total)*Math.PI*2;
-        const end=start+a;
-        ctx.beginPath();
-        ctx.moveTo(cx,cy);
-        ctx.arc(cx,cy,r,start,end);
-        ctx.closePath();
-        ctx.fillStyle=colors[d.label] || "#64748b";
-        ctx.fill();
-        ctx.strokeStyle="white";
-        ctx.lineWidth=2;
-        ctx.stroke();
-        start=end;
+        return { h, entry, current, shares, mkt: mktOrCost, pnl, pnlPct };
       });
 
-      ctx.beginPath();
-      ctx.arc(cx,cy,r*0.58,0,Math.PI*2);
-      ctx.fillStyle="#fff";
-      ctx.fill();
+      const exposure = rows.reduce((s,r)=>s + r.mkt, 0);
+      const totalPnL = rows.reduce((s,r)=>s + r.pnl, 0);
+      const net = cash + exposure;
 
-      ctx.fillStyle="rgba(15,23,42,.80)";
-      ctx.font="700 14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-      ctx.textAlign="center";
-      ctx.fillText("Net Liq", cx, cy - 8);
-
-      ctx.fillStyle="#0f172a";
-      ctx.font="800 18px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-      ctx.fillText(usd(m.net,0), cx, cy + 16);
-
-      const legend = document.getElementById("legend");
-      legend.innerHTML = "";
-      data.forEach(d=>{
-        const el=document.createElement("div");
-        el.className="leg";
-        el.innerHTML=`<span class="sw" style="background:${colors[d.label] || "#64748b"}"></span>
-                      <span><b>${d.label}</b> — ${Math.round((d.value/total)*100)}%</span>`;
-        legend.appendChild(el);
-      });
+      return { cap, cash, exposure, totalPnL, net, rows };
     }
 
-    function tvIframe(symbol){
-      // TradingView widget as iframe to avoid injecting script tags dynamically.
-      const params = encodeURIComponent(JSON.stringify({
-        symbol,
-        locale:"en",
-        dateRange:"12M",
-        colorTheme:"light",
-        isTransparent:false,
-        width:"100%",
-        height:"260"
-      }));
-      return `https://s.tradingview.com/widgetembed/?frameElementId=tv_${encodeURIComponent(symbol)}&symbol=${encodeURIComponent(symbol)}&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=[]&theme=light&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&studies_overrides={}&overrides={}`;
+    function riskPill(risk){
+      if (risk === "Lower") return '<span class="pill low">Lower risk</span>';
+      if (risk === "Medium") return '<span class="pill med">Medium risk</span>';
+      return '<span class="pill high">Higher risk</span>';
     }
 
-    function renderAll(){
-      const p = loadPortfolio();
-      const m = calcPortfolio(p);
+    function renderTable(model){
+      const tbody = document.getElementById("rows");
+      tbody.innerHTML = "";
 
-      const kpiNet = document.getElementById("kpiNet");
-      const kpiPnL = document.getElementById("kpiPnL");
-      const kpiCash = document.getElementById("kpiCash");
-      const kpiExposure = document.getElementById("kpiExposure");
-
-      kpiNet.textContent = usd(m.net,2);
-      kpiCash.textContent = usd(m.cash,0);
-      kpiExposure.textContent = usd(m.mv,2);
-      kpiPnL.textContent = usd(m.pnl,2);
-
-      kpiPnL.classList.remove("good","bad");
-      if (m.pnl > 0) kpiPnL.classList.add("good");
-      if (m.pnl < 0) kpiPnL.classList.add("bad");
-
-      const asOf = (lastFeed && lastFeed.asOf) ? lastFeed.asOf : FALLBACK_PRICES.asOf;
-      document.getElementById("feedStatus").textContent = "Price feed as-of: " + (asOf || "—");
-
-      const body = document.getElementById("holdingsBody");
-      body.innerHTML = "";
-      p.holdings.forEach(h=>{
-        const r = calcHolding(h);
+      model.rows.forEach((r, idx) => {
         const tr = document.createElement("tr");
-        const pnlClass = r.pnl > 0 ? "good" : (r.pnl < 0 ? "bad" : "");
-        const pnlPctClass = r.pnlPct > 0 ? "good" : (r.pnlPct < 0 ? "bad" : "");
+        const pnlClass = r.pnl >= 0 ? "pos" : "neg";
 
         tr.innerHTML = `
           <td>
-            <div class="rowtitle">${h.name} <span class="muted">(${h.ticker})</span></div>
-            <div class="rowmeta">Entry date: <span class="mono">${ENTRY_DATE}</span></div>
+            <div><b>${r.h.name}</b> <span class="muted">(${r.h.ticker})</span></div>
+            <div class="tiny muted">Entry date: ${DEFAULT_PORTFOLIO.entryDate}</div>
           </td>
-          <td><span class="pill ${riskClass(h.risk)}">${h.risk} risk</span></td>
-          <td class="mono">${usd(h.allocation,0)}</td>
-          <td class="mono">${usd(r.entry,3)}</td>
-          <td class="mono">${r.current != null ? usd(r.current,3) : "—"}</td>
-          <td class="mono">${r.shares != null ? r.shares.toFixed(4) : "—"}</td>
-          <td class="mono">${usd(r.mkt,2)}</td>
-          <td class="mono ${pnlClass}">${usd(r.pnl,2)}</td>
-          <td class="mono ${pnlPctClass}">${pct(r.pnlPct)}</td>
+          <td>${riskPill(r.h.risk)}</td>
+          <td>${money(r.h.allocation, 0)}</td>
+          <td>${money(r.entry, 2)}</td>
+          <td>${r.current === null ? "—" : money(r.current, 3)}</td>
+          <td>${r.shares === null ? "—" : r.shares.toFixed(4)}</td>
+          <td>${money(r.mkt, 2)}</td>
+          <td class="${pnlClass}">${money(r.pnl, 2)}</td>
+          <td class="${pnlClass}">${pct(r.pnlPct)}</td>
+          <td>
+            <div class="row-actions">
+              <button class="btnx" data-idx="${idx}" data-action="details">View thesis</button>
+            </div>
+          </td>
         `;
-        body.appendChild(tr);
+        tbody.appendChild(tr);
       });
-
-      const thesis = document.getElementById("thesisList");
-      thesis.innerHTML = "";
-      p.holdings.forEach(h=>{
-        const d = document.createElement("details");
-        const iframeUrl = tvIframe(h.tvSymbol);
-        d.innerHTML = `
-          <summary>
-            <div class="sum-left">
-              <div style="font-weight:850;">${h.name} <span class="muted">(${h.ticker})</span></div>
-              <div class="small">Allocation: <span class="mono">${usd(h.allocation,0)}</span> • Entry: <span class="mono">${usd(h.entry,3)}</span></div>
-            </div>
-            <div class="sum-right">
-              <span class="pill ${riskClass(h.risk)}">${h.risk} risk</span>
-              <span class="small" style="font-weight:700;">View thesis</span>
-            </div>
-          </summary>
-          <div class="details-body">
-            <p><b>Why it’s on the list:</b> ${h.why}</p>
-            <p><b>Primary risks:</b> ${h.risks}</p>
-            <p class="small">Selected in: <a href="${h.link}">supporting post</a>.</p>
-
-            <div class="chart-box">
-              <iframe class="chart-iframe" src="${iframeUrl}" title="Chart ${h.ticker}" loading="lazy"></iframe>
-            </div>
-          </div>
-        `;
-        thesis.appendChild(d);
-      });
-
-      renderPie(p, m);
     }
 
-    async function refreshPrices(){
-      try{
-        lastFeed = await fetchPrices();
-      }catch(e){
-        lastFeed = null;
+    function drawPie(model){
+      const canvas = document.getElementById("pie");
+      const ctx = canvas.getContext("2d");
+      const legend = document.getElementById("legend");
+      legend.innerHTML = "";
+
+      const data = [];
+      model.rows.forEach(r => data.push({label:r.h.ticker, value:r.h.allocation, color:COLORS[r.h.ticker]}));
+      data.push({label:"CASH", value:model.cash, color:COLORS.CASH});
+
+      const total = data.reduce((s,d)=>s+d.value,0);
+      const cx = canvas.width/2, cy = canvas.height/2;
+      const R = Math.min(cx, cy) - 10;
+      const r0 = R * 0.62;
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      // ring background
+      ctx.beginPath();
+      ctx.arc(cx,cy,R,0,Math.PI*2);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(15,23,42,.05)";
+      ctx.fill();
+
+      let start = -Math.PI/2;
+      data.forEach(d => {
+        const a = (d.value/total) * Math.PI*2;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,R,start,start+a);
+        ctx.closePath();
+        ctx.fillStyle = d.color;
+        ctx.fill();
+        start += a;
+      });
+
+      // hole
+      ctx.beginPath();
+      ctx.arc(cx,cy,r0,0,Math.PI*2);
+      ctx.closePath();
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+
+      // center label
+      ctx.fillStyle = "rgba(15,23,42,.75)";
+      ctx.font = "700 14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Net Liq", cx, cy - 8);
+      ctx.fillStyle = "rgba(15,23,42,.95)";
+      ctx.font = "800 18px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+      ctx.fillText(money(model.net, 2), cx, cy + 18);
+
+      // legend
+      data.forEach(d => {
+        const pctVal = total > 0 ? (d.value/total) : 0;
+        const div = document.createElement("div");
+        div.className = "lg";
+        div.innerHTML = `<span class="sw" style="background:${d.color}"></span>
+          <span><b>${d.label}</b> <span class="muted">${pct(pctVal)}</span></span>`;
+        legend.appendChild(div);
+      });
+    }
+
+    function setKPIs(model){
+      document.getElementById("capLabel").textContent = "US$" + model.cap.toLocaleString();
+      document.getElementById("kCash").textContent = money(model.cash, 2);
+      document.getElementById("kExp").textContent = money(model.exposure, 2);
+      document.getElementById("kPnL").textContent = money(model.totalPnL, 2);
+      document.getElementById("kNet").textContent = money(model.net, 2);
+    }
+
+    function openDetails(h){
+      const box = document.getElementById("detailBox");
+      box.classList.add("open");
+
+      document.getElementById("dTitle").textContent = `${h.name} (${h.ticker})`;
+      document.getElementById("dMeta").textContent = `Allocation: ${money(h.allocation,0)} • Risk: ${h.risk} • Entry open (2026-02-12): ${money(h.entry,2)}`;
+      document.getElementById("dWhy").textContent = h.why;
+      document.getElementById("dRisks").textContent = h.risks;
+
+      const post = document.getElementById("dPost");
+      post.href = h.selectionPost || "/posts.html";
+
+      // update TV symbol
+      const sym = encodeURIComponent(h.tvSymbol || ("NYSE:" + h.ticker));
+      const src = `https://s.tradingview.com/widgetembed/?frameElementId=tradingview&symbol=${sym}&interval=D&hidesidetoolbar=1&symboledit=1&saveimage=0&toolbarbg=ffffff&studies=%5B%5D&hideideas=1&theme=light&style=1&timezone=Etc%2FUTC&withdateranges=1&hidevolume=0&allow_symbol_change=1`;
+      document.getElementById("tvFrame").src = src;
+    }
+
+    async function renderAll(){
+      const p = loadPortfolio();
+
+      // Try load prices feed; if missing, still render using cost/entry
+      let prices = null;
+      try {
+        prices = await fetchPrices();
+        document.getElementById("asOf").textContent = prices.asOf ? prices.asOf : "—";
+      } catch {
+        document.getElementById("asOf").textContent = "—";
+        prices = { quotes: {} };
       }
-      renderAll();
-    }
 
-    function resetPortfolio(){
-      savePortfolio(structuredClone(DEFAULT_PORTFOLIO));
-      renderAll();
+      const model = calc(p, prices);
+
+      setKPIs(model);
+      drawPie(model);
+      renderTable(model);
+
+      // Default details to first holding
+      openDetails(p.holdings[0]);
+
+      // Save (in case you later tweak holdings)
+      savePortfolio(p);
     }
 
     function wire(){
-      document.getElementById("btnRefresh").addEventListener("click", refreshPrices);
-      document.getElementById("btnReset").addEventListener("click", resetPortfolio);
+      document.getElementById("btnReset").addEventListener("click", () => {
+        savePortfolio(clone(DEFAULT_PORTFOLIO));
+        renderAll();
+      });
 
-      refreshPrices();
-      setInterval(refreshPrices, 60 * 60 * 1000);
+      document.getElementById("btnRefresh").addEventListener("click", () => {
+        renderAll();
+      });
+
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-action='details']");
+        if (!btn) return;
+        const idx = parseInt(btn.getAttribute("data-idx"), 10);
+        const p = loadPortfolio();
+        openDetails(p.holdings[idx]);
+      });
+
+      // auto-refresh page view hourly (matches your feed cadence)
+      setInterval(renderAll, 60 * 60 * 1000);
     }
 
-    if (!localStorage.getItem(STORAGE_KEY)) savePortfolio(structuredClone(DEFAULT_PORTFOLIO));
     wire();
     renderAll();
   </script>
