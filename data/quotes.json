@@ -1,5 +1,5 @@
 {
-  "asof_iso": "2026-02-13T19:37:50.184092+00:00",
+  "asof_iso": "2026-02-13T20:30:39.000276+00:00",
   "last_trading_day": "2026-02-12",
   "source": "alphavantage_free",
   "prices": {
@@ -8,8 +8,7 @@
     "GAU": 2.73,
     "NFGC": 2.69,
     "VGZ": 2.63,
-    "NEWP": 3.53,
-    "GOOGL":370.11
+    "NEWP": 3.53
   },
   "errors": {}
 }
