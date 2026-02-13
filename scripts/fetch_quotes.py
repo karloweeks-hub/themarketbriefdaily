@@ -6,6 +6,7 @@ import urllib.parse
 import os
 
 API_KEY = "GUY8S89NSG15NVYH"
+INTERVAL = "5min"
 
 SYMBOLS = {
     "AGI": "AGI",
@@ -16,141 +17,73 @@ SYMBOLS = {
     "NEWP": "NEWP",
 }
 
-INTRADAY_INTERVAL = "5min"
-
-TOTAL_CAPITAL = 100000
-
-TARGET_DOLLARS = {
-    "AGI": 2000,
-    "FSM": 1500,
-    "GAU": 1000,
-    "NFGC": 800,
-    "VGZ": 700,
-    "NEWP": 1000,
-}
-
-ENTRY = {
-    "AGI": 42.855,
-    "FSM": 10.46,
-    "GAU": 2.765,
-    "NFGC": 2.735,
-    "VGZ": 2.675,
-    "NEWP": 3.58,
-}
-
 def http_get_json(params: dict) -> dict:
     url = "https://www.alphavantage.co/query?" + urllib.parse.urlencode(params)
     with urllib.request.urlopen(url, timeout=30) as resp:
         raw = resp.read().decode("utf-8", errors="replace")
     return json.loads(raw)
 
-def check_common_errors(data: dict):
+def check_errors(data: dict):
     if "Note" in data:
-        raise RuntimeError("Rate limited")
+        raise RuntimeError("Rate limited (Note)")
     if "Information" in data:
-        raise RuntimeError(data["Information"])
+        raise RuntimeError(f"Information: {data['Information']}")
     if "Error Message" in data:
-        raise RuntimeError(data["Error Message"])
+        raise RuntimeError(f"API error: {data['Error Message']}")
 
-def fetch_global_quote(symbol):
-    data = http_get_json({
-        "function": "GLOBAL_QUOTE",
-        "symbol": symbol,
-        "apikey": API_KEY,
-    })
-    check_common_errors(data)
-    q = data.get("Global Quote") or {}
-    px = q.get("05. price")
-    day = q.get("07. latest trading day") or ""
-    if not px:
-        raise RuntimeError("Empty GLOBAL_QUOTE")
-    return float(px), day
-
-def fetch_intraday(symbol):
+def fetch_intraday_close(av_symbol: str):
     data = http_get_json({
         "function": "TIME_SERIES_INTRADAY",
-        "symbol": symbol,
-        "interval": INTRADAY_INTERVAL,
+        "symbol": av_symbol,
+        "interval": INTERVAL,
         "outputsize": "compact",
         "apikey": API_KEY,
     })
-    check_common_errors(data)
-    key = f"Time Series ({INTRADAY_INTERVAL})"
+    check_errors(data)
+
+    key = f"Time Series ({INTERVAL})"
     series = data.get(key)
-    if not series:
-        raise RuntimeError("Empty INTRADAY")
-    ts = sorted(series.keys())[-1]
-    return float(series[ts]["4. close"]), ts
+    if not series or not isinstance(series, dict):
+        raise RuntimeError("No intraday series returned (unsupported or empty)")
 
-def fetch_price(symbol):
-    try:
-        return fetch_global_quote(symbol)
-    except:
-        return fetch_intraday(symbol)
-
-def load_json(path, default):
-    if os.path.exists(path):
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return default
-
-def save_json(path, data):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+    latest_ts = sorted(series.keys())[-1]
+    bar = series[latest_ts]
+    px = float(bar["4. close"])
+    if px <= 0:
+        raise RuntimeError("Bad intraday close")
+    return px, latest_ts
 
 def main():
-    quotes = {
+    out = {
         "asof_iso": datetime.now(timezone.utc).isoformat(),
         "last_trading_day": "—",
-        "source": "alphavantage",
+        "source": "alphavantage_intraday",
+        "interval": INTERVAL,
         "prices": {},
         "errors": {}
     }
 
-    last_ts = ""
+    last_ts_seen = ""
 
-    for i, (k, sym) in enumerate(SYMBOLS.items()):
+    items = list(SYMBOLS.items())
+    for i, (internal, avsym) in enumerate(items):
         try:
-            px, ts = fetch_price(sym)
-            quotes["prices"][k] = px
-            if ts and ts > last_ts:
-                last_ts = ts
+            px, ts = fetch_intraday_close(avsym)
+            out["prices"][internal] = px
+            if ts and ts > last_ts_seen:
+                last_ts_seen = ts
         except Exception as e:
-            quotes["errors"][k] = str(e)
-        time.sleep(15)
+            out["errors"][internal] = str(e)
 
-    quotes["last_trading_day"] = last_ts or "—"
-    save_json("data/quotes.json", quotes)
+        # free tier throttle
+        if i < len(items) - 1:
+            time.sleep(15)
 
-    # --------- PERFORMANCE SNAPSHOT ---------
-    perf = load_json("data/performance.json", {
-        "inception": "2026-02-12",
-        "currency": "USD",
-        "nav_history": []
-    })
+    out["last_trading_day"] = last_ts_seen or "—"
 
-    INITIAL_INVESTED = sum(TARGET_DOLLARS.values())
-    INITIAL_CASH = max(0, TOTAL_CAPITAL - INITIAL_INVESTED)
-
-    invested_mv = 0.0
-    for k, px in quotes["prices"].items():
-        sh = TARGET_DOLLARS[k] / ENTRY[k]
-        invested_mv += sh * px
-
-    nav = invested_mv + INITIAL_CASH
-    ret = (nav / TOTAL_CAPITAL - 1) * 100
-
-    today = datetime.now(timezone.utc).date().isoformat()
-
-    if not perf["nav_history"] or perf["nav_history"][-1]["date"] != today:
-        perf["nav_history"].append({
-            "date": today,
-            "nav": round(nav, 2),
-            "return_pct": round(ret, 3)
-        })
-
-    save_json("data/performance.json", perf)
+    os.makedirs("data", exist_ok=True)
+    with open("data/quotes.json", "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=2)
 
 if __name__ == "__main__":
     main()
