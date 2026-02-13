@@ -1,7 +1,7 @@
 // scripts/update-prices.mjs
 import fs from "node:fs/promises";
 
-const TICKERS = ["AGI", "FSM", "GAU", "NFGC", "VGZ", "NEWP"];
+const TICKERS = ["AGI", "FSM", "GAU", "NFGC", "VGZ", "NEWP", "GOOGL"];
 
 // Stooq uses lowercase tickers and may need exchange suffixes for some.
 // For US stocks, many work as {ticker}.us
