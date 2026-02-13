@@ -218,9 +218,8 @@
       if (t.includes("rates") || t.includes("bond")) return "Rates";
       // simple keyword heuristics
       const text = (stripHtml(item.title) + " " + stripHtml(item.description)).toLowerCase();
-      if text.includes("silver") return "Metals";
+      if (text.includes("silver")) return "Metals";
       if (text.includes("japan") || text.includes("treasury") || text.includes("fed")) return "Macro";
-      if text.includes("goldman") return "Tech Stocks";
       return "Research";
     }
 
