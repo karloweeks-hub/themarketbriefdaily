@@ -1,15 +1,15 @@
 {
-  "asof_iso": "2026-02-17T23:52:30.529150+00:00",
-  "last_trading_day": "2026-02-17",
+  "asof_iso": "2026-02-18T01:42:25.708301+00:00",
+  "last_trading_day": "\u2014",
   "source": "alphavantage_free",
-  "prices": {
-    "AGI": 43.31,
-    "FSM": 11.05,
-    "GAU": 3.02,
-    "NFGC": 2.59,
-    "VGZ": 2.52,
-    "NEWP": 3.42,
-    "GOOGL": 305.72
-  },
-  "errors": {}
+  "prices": {},
+  "errors": {
+    "AGI": "The read operation timed out",
+    "FSM": "The read operation timed out",
+    "GAU": "The read operation timed out",
+    "NFGC": "The read operation timed out",
+    "VGZ": "The read operation timed out",
+    "NEWP": "The read operation timed out",
+    "GOOGL": "The read operation timed out"
+  }
 }
