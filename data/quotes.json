@@ -1,15 +1,15 @@
 {
-  "asof_iso": "2026-02-19T20:56:36.478926+00:00",
-  "last_trading_day": "2026-02-18",
+  "asof_iso": "2026-02-19T21:29:23.965211+00:00",
+  "last_trading_day": "2026-02-19",
   "source": "alphavantage_free",
   "prices": {
-    "AGI": 43.74,
-    "FSM": 10.44,
-    "GAU": 2.8,
-    "NFGC": 2.66,
-    "VGZ": 2.56,
-    "NEWP": 3.61,
-    "GOOGL": 303.33
+    "AGI": 45.86,
+    "FSM": 10.895,
+    "GAU": 3.015,
+    "NFGC": 2.725,
+    "VGZ": 2.645,
+    "NEWP": 3.72,
+    "GOOGL": 302.85
   },
   "errors": {}
 }
