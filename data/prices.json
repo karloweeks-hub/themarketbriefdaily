@@ -1,27 +1,6 @@
 {
-  "asOf": "2026-02-20T15:45:07.512Z",
-  "source": "stooq",
+  "asOf": "2026-02-20T16:44:32Z",
   "quotes": {
-    "AGI": {
-      "price": 45.3355
-    },
-    "FSM": {
-      "price": 11.12
-    },
-    "GAU": {
-      "price": 2.925
-    },
-    "NFGC": {
-      "price": 2.6314
-    },
-    "VGZ": {
-      "price": 2.63
-    },
-    "NEWP": {
-      "price": 3.91
-    },
-    "GOOGL": {
-      "price": 310.36
-    }
+    "AGI": 46.065,"FSM": 11.5,"GAU": 3.01,"NFGC": 2.63,"VGZ": 2.655,"NEWP": 3.994
   }
 }
